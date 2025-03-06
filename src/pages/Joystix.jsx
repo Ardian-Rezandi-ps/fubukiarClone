@@ -26,7 +26,7 @@ const Joystix = () => {
 
 
     const handleStop = async (event) => {
-        console.log('stop');
+        await updatemove(0, 0,gender);
     }
     const handleMove = async (event) => {
       //  console.log(`Direction: ${event.direction}, MoveX: ${event.x}, MoveY: ${event.y}`);

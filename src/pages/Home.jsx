@@ -17,7 +17,7 @@ const Home = () => {
     const [countFromTotal, setCountFromTotal] = React.useState("");
     const [userPoint, setUserPoint] = React.useState("");
     const [canClaim, setCanClaim] = React.useState(false);
-    const app = initializeApp(firebaseConfig);
+    initializeApp(firebaseConfig);
     const hasCompletedTutorial = sessionStorage.getItem("hasCompletedTutorial");
     const redirectUserUrl = hasCompletedTutorial ? "/start" : "/guide";
     const getUserPoint = async () => {
