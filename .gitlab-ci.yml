@@ -1,0 +1,126 @@
+stages:
+  - test
+  - build
+  - deploy
+  - build_firebase
+  - deploy_firebase
+
+variables:
+  IMAGE_REPOSITORY: ${CI_APPLICATION_REPOSITORY:-$CI_REGISTRY_IMAGE/$CI_COMMIT_REF_SLUG}
+  IMAGE_TAG: ${CI_APPLICATION_TAG:-$CI_COMMIT_SHA}
+  SECRET_NAME: "gitlab-registry-${CI_PROJECT_PATH_SLUG}"
+  DEBUG: "1"
+  KUBE_CONTEXT: ${CI_PROJECT_PATH}:${CI_COMMIT_REF_SLUG}
+  K8S_PROXY_URL: https://git.erasysconsulting.com/-/kubernetes-agent/k8s-proxy/
+  AGENT_ID: 13
+  DOCKER_HOST: tcp://docker:2375
+  DOCKER_TLS_CERTDIR: ""
+  FIREBASE_TOKEN: ${FIREBASE_TOKEN}
+  FIREBASE_HOSTING_SITE: ""
+  FIREBASE_DEPLOY_SITE: ""
+  VITE_FIREBASE_API_KEY: ${VITE_FIREBASE_API_KEY}
+  VITE_FIREBASE_AUTH_DOMAIN: ${VITE_FIREBASE_AUTH_DOMAIN}
+  VITE_FIREBASE_DATABASE_URL: ${VITE_FIREBASE_DATABASE_URL}
+  VITE_FIREBASE_PROJECT_ID: ${VITE_FIREBASE_PROJECT_ID}
+  VITE_FIREBASE_STORAGE_BUCKET: ${VITE_FIREBASE_STORAGE_BUCKET}
+  VITE_FIREBASE_MESSAGING_SENDER_ID: ${VITE_FIREBASE_MESSAGING_SENDER_ID}
+  VITE_FIREBASE_APP_ID: ${VITE_FIREBASE_APP_ID}
+  VITE_FIREBASE_MEASUREMENT_ID: ${VITE_FIREBASE_MEASUREMENT_ID}
+
+cache:
+  paths:
+    - node_modules/
+
+build_firebase:
+  stage: build_firebase
+  image: node:20
+  script:
+    - npm install
+    - npm run build
+  artifacts:
+    paths:
+      - dist/
+  environment:
+    name: $CI_COMMIT_BRANCH
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "staging"'
+    - if: '$CI_COMMIT_BRANCH == "production"'
+
+deploy_firebase:
+  stage: deploy_firebase
+  image: node:20
+  script:
+    - npm install -g firebase-tools
+    - firebase use $FIREBASE_HOSTING_SITE
+    - firebase deploy --only hosting:$FIREBASE_DEPLOY_SITE --token $FIREBASE_TOKEN
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "staging"'
+      variables:
+        FIREBASE_DEPLOY_SITE: "fubuki-ar-test"
+        FIREBASE_HOSTING_SITE: "fubuki-ar-test"
+    - if: '$CI_COMMIT_BRANCH == "production"'
+      variables:
+        FIREBASE_DEPLOY_SITE: "indonesiakaya"
+        FIREBASE_HOSTING_SITE: "arundaya-9fb69"
+
+deploy_preview:
+  stage: deploy
+  image: dtzar/helm-kubectl:3.2.4
+  tags:
+    - kubernetes
+  environment:
+    name: review/$CI_BUILD_REF_NAME
+    url: https://fubuki-ar.preview.erasysconsulting.com
+    on_stop: stop_preview
+    auto_stop_in: 1 week
+  before_script:
+    - kubectl config set-credentials agent:$AGENT_ID --token="ci:${AGENT_ID}:${CI_JOB_TOKEN}"
+    - kubectl config set-cluster gitlab --server="${K8S_PROXY_URL}"
+    - kubectl config set-context "$KUBE_CONTEXT" --cluster=gitlab --user="agent:${AGENT_ID}"
+  script:
+    - kubectl config get-contexts
+    - kubectl config use-context ${KUBE_CONTEXT}
+    - kubectl create secret -n "$KUBE_NAMESPACE" docker-registry "${SECRET_NAME}" --docker-server="$CI_REGISTRY" --docker-username="${CI_DEPLOY_USER:-$CI_REGISTRY_USER}" --docker-password="${CI_DEPLOY_PASSWORD:-$CI_REGISTRY_PASSWORD}" --docker-email="$GITLAB_USER_EMAIL" -o yaml --dry-run=client | kubectl replace -n "$KUBE_NAMESPACE" --force -f - # create secret to pull from registry
+    - helm dependency update ./reactjs-deploy-chart
+    - helm upgrade --install --set application.public_url=https://fubuki-ar.preview.erasysconsulting.com --set application.vite_be_url="${VITE_BE_URL}" --set image.repository="${CI_APPLICATION_REPOSITORY:-$CI_REGISTRY_IMAGE/$CI_COMMIT_REF_SLUG}" --set-string image.tag="${CI_APPLICATION_TAG:-$CI_COMMIT_SHA}" --set service.url=https://fubuki-ar.preview.erasysconsulting.com --set imagePullSecrets=${SECRET_NAME} --set gitlab.app=$CI_PROJECT_PATH_SLUG --set gitlab.env=$CI_ENVIRONMENT_SLUG --set web.requests="200m" --set web.limits="200m" --set web.replicas="1" --wait ${CI_PROJECT_PATH_SLUG}-${CI_COMMIT_REF_SLUG} ./reactjs-deploy-chart
+    - echo $CI_ENVIRONMENT_URL > environment_url.txt
+  artifacts:
+    paths:
+      - environment_url.txt
+  only:
+    - main
+
+stop_preview:
+  stage: deploy
+  variables:
+    GIT_STRATEGY: none
+  image: dtzar/helm-kubectl:3.2.4
+  tags:
+    - kubernetes
+  before_script:
+    - kubectl config set-credentials agent:$AGENT_ID --token="ci:${AGENT_ID}:${CI_JOB_TOKEN}"
+    - kubectl config set-cluster gitlab --server="${K8S_PROXY_URL}"
+    - kubectl config set-context "$KUBE_CONTEXT" --cluster=gitlab --user="agent:${AGENT_ID}"
+    - kubectl config use-context "$KUBE_CONTEXT"
+  script:
+    - helm uninstall ${CI_PROJECT_PATH_SLUG}-${CI_COMMIT_REF_SLUG}
+  when: manual
+  environment:
+    name: review/$CI_BUILD_REF_NAME
+    action: stop
+  only:
+    - main
+
+build:
+  rules:
+    - if: '$CI_COMMIT_BRANCH != "main"'
+      when: never
+    - if: '$CI_COMMIT_BRANCH == "main"'
+      when: always
+
+
+sast:
+  stage: test
+include:
+  - template: Jobs/Build.gitlab-ci.yml
+  - template: Security/SAST.gitlab-ci.yml

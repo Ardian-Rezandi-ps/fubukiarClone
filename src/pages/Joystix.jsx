@@ -10,6 +10,7 @@ import {updatemove} from "../lib/firebase/movexy";
 const Joystix = () => {
     const [isLoading, setIsLoading] = React.useState(true);
     const [selectedContent, setSelectedContent] = React.useState(null);
+    const [gender, setGender] = React.useState(null);
     const params = useParams();
     const tag = params.tag;
 
@@ -27,13 +28,14 @@ const Joystix = () => {
     const handleStop = async (event) => {
         console.log('stop');
     }
-
     const handleMove = async (event) => {
       //  console.log(`Direction: ${event.direction}, MoveX: ${event.x}, MoveY: ${event.y}`);
-        await updatemove(event.x, event.y);
+        await updatemove(event.x, event.y,gender);
     }
 
-    
+    const handleGenderSelect = (selectedGender) => {
+        setGender(selectedGender);
+    };
 
     if (isLoading) {
         return (
@@ -41,10 +43,23 @@ const Joystix = () => {
         );
     }
 
+    if (gender === null) {
+        return (
+            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', height: '100vh' }}>
+                <h1 style={{color:'white'}}>Pilih Player:</h1>     
+                <br></br>
+                <button style={{ backgroundColor: 'white', width:'250px', fontSize: '30px', padding: '10px 20px', margin: '10px' }} onClick={() => handleGenderSelect('male')}>Raja</button>
+                <br></br>
+                <button style={{ backgroundColor: 'white', width:'250px', fontSize: '30px', padding: '10px 20px', margin: '10px' }} onClick={() => handleGenderSelect('female')}>Ratu</button>
+            </div>
+        );
+    }
+
     return (
         <div>
               <BackIcon />
             <h1 style={{color:'white'}}>Test</h1>
+
             <div style={{ position: 'absolute', bottom: 15, left: '50%', transform: 'translateX(-50%)' }}>
                 <Joystick size={200} sticky={false} baseColor="white" stickColor="grey" move={handleMove} stop={handleStop}></Joystick>
             </div>
