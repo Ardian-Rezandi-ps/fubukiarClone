@@ -8,6 +8,8 @@ import { getCountFromTotal } from "../lib/firebase/scannedImageServices";
 import { getSelectedUserPoints } from "../lib/firebase/users";
 import LoadingScreen from "../components/LoadingScreen";
 import { getCanClaim } from "../lib/firebase/quiz";
+import { initializeApp } from "firebase/app";
+import {firebaseConfig} from "../lib/firebase/firebase";
 const Home = () => {
     const { user, logoutUser } = useAuth();
     const [isLoading, setIsLoading] = React.useState(true);
@@ -15,10 +17,9 @@ const Home = () => {
     const [countFromTotal, setCountFromTotal] = React.useState("");
     const [userPoint, setUserPoint] = React.useState("");
     const [canClaim, setCanClaim] = React.useState(false);
-
+    const app = initializeApp(firebaseConfig);
     const hasCompletedTutorial = sessionStorage.getItem("hasCompletedTutorial");
     const redirectUserUrl = hasCompletedTutorial ? "/start" : "/guide";
-
     const getUserPoint = async () => {
         const point = await getSelectedUserPoints(user.id);
         setUserPoint(point);
