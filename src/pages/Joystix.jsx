@@ -7,6 +7,7 @@ import { sanitizeDOM } from "../lib/sanitizeDOM";
 import LoadingScreen from "../components/LoadingScreen";
 import { Joystick } from 'react-joystick-component';
 import {updatemove} from "../lib/firebase/movexy";
+import {chat} from "../lib/firebase/movexy";
 const Joystix = () => {
     const [isLoading, setIsLoading] = React.useState(true);
     const [selectedContent, setSelectedContent] = React.useState(null);
@@ -31,6 +32,12 @@ const Joystix = () => {
     const handleMove = async (event) => {
       //  console.log(`Direction: ${event.direction}, MoveX: ${event.x}, MoveY: ${event.y}`);
         await updatemove(event.x, event.y,gender);
+    }
+
+    const handleInteract = async (event) => {
+        await chat("ok",gender);
+        // Implementasi logika interaksi di sini
+        console.log("Interaksi dilakukan!");
     }
 
     const handleGenderSelect = (selectedGender) => {
@@ -59,8 +66,24 @@ const Joystix = () => {
         <div>
               <BackIcon />
             <h1 style={{color:'white'}}>Test</h1>
-
-            <div style={{ position: 'absolute', bottom: 15, left: '50%', transform: 'translateX(-50%)' }}>
+            
+            <div style={{ position: 'absolute', bottom: 15, left: '50%', transform: 'translateX(-50%)', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '20px' }}>
+                <button 
+                    onClick={handleInteract}
+                    style={{ 
+                        backgroundColor: 'white',
+                        width: '200px',
+                        height: '60px',
+                        borderRadius: '30px',
+                        fontSize: '24px',
+                        fontWeight: 'bold',
+                        cursor: 'pointer',
+                        border: 'none',
+                        boxShadow: '0 4px 8px rgba(0,0,0,0.2)'
+                    }}
+                >
+                    Interact
+                </button>
                 <Joystick size={200} sticky={false} baseColor="white" stickColor="grey" move={handleMove} stop={handleStop}></Joystick>
             </div>
             

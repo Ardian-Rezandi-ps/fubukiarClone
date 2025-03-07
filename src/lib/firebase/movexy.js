@@ -6,22 +6,28 @@ export const updatemove = async (x,y,gender) => {
     let my=y;
     let mg=gender;
     var gen="Demo";
-    if(gender === "female"){
+    if(mg === "female"){
       gen="Demo2";
     }
-      const tes = await get(ref(database, `count/`+gen+`/moveX`));
-      console.log("test=", String(tes.val()));
+ 
     // Update the value in Firebase database
-   // const moveRef = ref(database, 'count/Demo'); // Menentukan referensi ke lokasi di database
-      await set(ref(database, `count/`+gen+`/moveX`), mx);
+       await set(ref(database, `count/`+gen+`/moveX`), mx);
       await set(ref(database, `count/`+gen+`/moveY`), my);// Mengupdate nilai moveX dan moveY
-  // set(ref(database, 'count/Demo'), {
- //  moveY: mx,
-   // moveX: my
-  //});
-   
-  // console.log("xy="+mx);
+ 
+}
 
+export const chat = async (chtstring,gender) => {
+  let mx=x;
+  let cht=chtstring;
+  let mg=gender;
+  var gen="Demo";
+  if(mg === "female"){
+    gen="Demo2";
+  }
+   
+  // Update the value in Firebase database
+     await set(ref(database, `count/`+gen+`/chat`), cht);
+     // Mengupdate nilai chat
 
 }
 
