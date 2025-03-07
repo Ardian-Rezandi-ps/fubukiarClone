@@ -17,7 +17,7 @@ export const updatemove = async (x,y,gender) => {
 }
 
 export const chat = async (chtstring,gender) => {
-  let mx=x;
+  
   let cht=chtstring;
   let mg=gender;
   var gen="Demo";
@@ -26,6 +26,7 @@ export const chat = async (chtstring,gender) => {
   }
    
   // Update the value in Firebase database
+    await set(ref(database, `count/`+gen+`/ischat`), true);
      await set(ref(database, `count/`+gen+`/chat`), cht);
      // Mengupdate nilai chat
 
