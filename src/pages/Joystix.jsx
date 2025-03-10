@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Carousel from "../components/Carousel";
 import { useParams } from "react-router-dom";
 import { getContentSettingByTag } from "../lib/firebase/contentSetting";
@@ -8,11 +8,15 @@ import LoadingScreen from "../components/LoadingScreen";
 import { Joystick } from 'react-joystick-component';
 import {updatemove} from "../lib/firebase/movexy";
 import {chat} from "../lib/firebase/movexy";
+
 const Joystix = () => {
     const [isLoading, setIsLoading] = React.useState(true);
     const [selectedContent, setSelectedContent] = React.useState(null);
     const [gender, setGender] = React.useState(null);
     const [showChatGrid, setShowChatGrid] = React.useState(false);
+    const [showDialog, setShowDialog] = useState(false);
+    const [dialogText, setDialogText] = useState("");
+    const [isTyping, setIsTyping] = useState(false);
     const params = useParams();
     const tag = params.tag;
 
@@ -36,7 +40,6 @@ const Joystix = () => {
         fetchContent();
     }, [tag]);
 
-
     const handleStop = async (event) => {
         await updatemove(0, 0,gender);
     }
@@ -45,14 +48,37 @@ const Joystix = () => {
         await updatemove(event.x, event.y,gender);
     }
 
+    const typeWriter = (text) => {
+        setIsTyping(true);
+        let i = 0;
+        setDialogText("");
+        const speed = 40; // kecepatan mengetik (ms)
+
+        const typing = setInterval(() => {
+            if (i < text.length) {
+                setDialogText((prev) => prev + text.charAt(i));
+                i++;
+            } else {
+                clearInterval(typing);
+                setIsTyping(false);
+            }
+        }, speed);
+    };
+
     const handleInteract = async (event) => {
-        await chat("ok",gender);
-        // Implementasi logika interaksi di sini
-        console.log("Interaksi dilakukan!");
-    }
+        await chat("ok", gender);
+        setShowDialog(true);
+        typeWriter(npcDialog.text);
+    };
 
     const handleGenderSelect = (selectedGender) => {
         setGender(selectedGender);
+    };
+
+    // Contoh dialog dan gambar NPC (nanti bisa diambil dari database)
+    const npcDialog = {
+        text: " "+"Ini adalah Totem. Terbuat dari batu yang diukir. Benda yang dipuja oleh orang suku disini.",
+        image: "/images/Totem.png" // sesuaikan dengan path gambar Anda
     };
 
     if (isLoading) {
@@ -106,6 +132,42 @@ const Joystix = () => {
                     )}
                 </div>
             </div>
+
+            {/* Dialog Box */}
+            {showDialog && (
+                <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+                    <div className="bg-primary-darker w-full h-full flex flex-col">
+                        {/* Image Container */}
+                        <div className="w-full h-1/2 p-4">
+                            <img 
+                                src={npcDialog.image} 
+                                alt="NPC"
+                                className="w-full h-full object-contain rounded-lg"
+                            />
+                        </div>
+
+                        {/* Dialog Container */}
+                        <div className="w-full h-1/2 bg-white p-6 rounded-t-3xl flex flex-col">
+                            <div className="flex-1 overflow-y-auto">
+                                <p className="text-2xl text-center">
+                                    {dialogText}
+                                    {isTyping && <span className="animate-pulse">|</span>}
+                                </p>
+                            </div>
+                            {!isTyping && (
+                                <div className="flex justify-center pb-4">
+                                    <button 
+                                        onClick={() => setShowDialog(false)}
+                                        className="bg-primary-orange text-white px-8 py-3 rounded-xl text-lg font-bold hover:bg-primary-orange/90 transition-colors"
+                                    >
+                                        Tutup
+                                    </button>
+                                </div>
+                            )}
+                        </div>
+                    </div>
+                </div>
+            )}
 
             <div id="joysticon" style={{ position: 'absolute', bottom: 15, left: '50%', transform: 'translateX(-50%)', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '20px' }}>
                 <button 
