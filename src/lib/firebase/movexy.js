@@ -1,6 +1,30 @@
-import { get, ref, set,update } from "firebase/database";
+import { get, ref, set, update } from "firebase/database";
 import { database } from "./firebase";
 
+let isEvent = false;
+let namaEvent = ""; // Variable untuk menyimpan nama event
+export const updatepersecond = async (gender) => {
+  let mg=gender;
+  var gen="Demo";
+  if(mg === "female"){
+    gen="Demo2";
+  }
+  // Get isevent value from Firebase
+  const eventRef = ref(database, `count/${gen}/isevent`);
+  const snapshot = await get(eventRef);
+  if (snapshot.exists()) {
+      isEvent = snapshot.val();
+  }
+
+  // Get event name value from Firebase
+  const eventNameRef = ref(database, `count/${gen}/event`);
+  const eventSnapshot = await get(eventNameRef);
+  if (eventSnapshot.exists()) {
+      namaEvent = eventSnapshot.val();
+  }
+
+  return isEvent;
+}
 export const updatemove = async (x,y,gender) => {
     let mx=x;
     let my=y;
@@ -11,10 +35,14 @@ export const updatemove = async (x,y,gender) => {
     }
  
     // Update the value in Firebase database
-       await set(ref(database, `count/`+gen+`/moveX`), mx);
-      await set(ref(database, `count/`+gen+`/moveY`), my);// Mengupdate nilai moveX dan moveY
- 
+    await set(ref(database, `count/${gen}/moveX`), mx);
+    await set(ref(database, `count/${gen}/moveY`), my);
+    
 }
+
+// Export isEvent dan namaEvent
+export const getIsEvent = () => isEvent;
+export const getNamaEvent = () => namaEvent;
 
 export const chat = async (chtstring,gender) => {
   

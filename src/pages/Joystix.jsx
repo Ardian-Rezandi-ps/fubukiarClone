@@ -6,8 +6,8 @@ import BackIcon from "../components/BackIcon";
 import { sanitizeDOM } from "../lib/sanitizeDOM";
 import LoadingScreen from "../components/LoadingScreen";
 import { Joystick } from 'react-joystick-component';
-import {updatemove} from "../lib/firebase/movexy";
-import {chat} from "../lib/firebase/movexy";
+import { updatemove, getIsEvent, getNamaEvent, updatepersecond } from "../lib/firebase/movexy";
+import { chat } from "../lib/firebase/movexy";
 
 const Joystix = () => {
     const [isLoading, setIsLoading] = React.useState(true);
@@ -17,6 +17,8 @@ const Joystix = () => {
     const [showDialog, setShowDialog] = useState(false);
     const [dialogText, setDialogText] = useState("");
     const [isTyping, setIsTyping] = useState(false);
+    const [isEventActive, setIsEventActive] = useState(false);
+    const [currentEvent, setCurrentEvent] = useState("");
     const params = useParams();
     const tag = params.tag;
 
@@ -39,20 +41,42 @@ const Joystix = () => {
         };
         fetchContent();
     }, [tag]);
+    //if(!isTyping){
+        useEffect(() => {
+        // Set up the interval when component mounts
+     
+        const interval = setInterval(async () => {
+            
+                 await handleupdatepersecond();
+            
+        }, 2000); // Run every 1000ms (1 second)
 
+        // Clean up the interval when component unmounts
+        return () => clearInterval(interval);
+        }, [gender]); // Add gender as dependency since it's used in handleupdatepersecond
+   // }
     const handleStop = async (event) => {
         await updatemove(0, 0,gender);
     }
+    const handleupdatepersecond = async () => {
+        if (!gender) return; // Guard clause if gender is not set
+        
+        await updatepersecond(gender);
+        setIsEventActive(getIsEvent());
+        setCurrentEvent(getNamaEvent());
+
+       
+    };
     const handleMove = async (event) => {
-      //  console.log(`Direction: ${event.direction}, MoveX: ${event.x}, MoveY: ${event.y}`);
-        await updatemove(event.x, event.y,gender);
+        await updatemove(event.x, event.y, gender);
+       
     }
 
     const typeWriter = (text) => {
         setIsTyping(true);
         let i = 0;
         setDialogText("");
-        const speed = 40; // kecepatan mengetik (ms)
+        const speed =60; // kecepatan mengetik (ms)
 
         const typing = setInterval(() => {
             if (i < text.length) {
@@ -66,19 +90,41 @@ const Joystix = () => {
     };
 
     const handleInteract = async (event) => {
-        await chat("ok", gender);
+        //await chat("ok", gender);
+      
+      if(!isTyping){
+        switch (getNamaEvent()) {
+            case "Eggs":
+                npcDialog.text = " "+"This is magic Eggs";
+                npcDialog.image = "/images/Eggs.png";
+                break;
+            case "Totem":
+                npcDialog.text = " "+"This is totem from rock";
+                npcDialog.image = "/images/Totem.png";
+                break;
+            case "Shield":
+                npcDialog.text = " "+"This is Shield to use in war";
+                npcDialog.image = "/images/Shield.png";
+                break;
+            default:
+                npcDialog.text = " "+"Nothing here";
+                npcDialog.image = "";
+                break;
+        }
         setShowDialog(true);
-        typeWriter(npcDialog.text);
+        setDialogText(npcDialog.text);
+       // typeWriter(npcDialog.text);
+      }  
     };
 
     const handleGenderSelect = (selectedGender) => {
         setGender(selectedGender);
     };
 
-    // Contoh dialog dan gambar NPC (nanti bisa diambil dari database)
+    // Pindahkan definisi npcDialog ke atas agar bisa dimodifikasi
     const npcDialog = {
-        text: " "+"Ini adalah Totem. Terbuat dari batu yang diukir. Benda yang dipuja oleh orang suku disini.",
-        image: "/images/Totem.png" // sesuaikan dengan path gambar Anda
+        text: "",
+        image: "/images/Totem.png"
     };
 
     if (isLoading) {
@@ -170,22 +216,24 @@ const Joystix = () => {
             )}
 
             <div id="joysticon" style={{ position: 'absolute', bottom: 15, left: '50%', transform: 'translateX(-50%)', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '20px' }}>
-                <button 
-                    onClick={handleInteract}
-                    style={{ 
-                        backgroundColor: 'white',
-                        width: '200px',
-                        height: '60px',
-                        borderRadius: '30px',
-                        fontSize: '24px',
-                        fontWeight: 'bold',
-                        cursor: 'pointer',
-                        border: 'none',
-                        boxShadow: '0 4px 8px rgba(0,0,0,0.2)'
-                    }}
-                >
-                    Interact
-                </button>
+                {isEventActive && (
+                    <button 
+                        onClick={handleInteract}
+                        style={{ 
+                            backgroundColor: 'white',
+                            width: '200px',
+                            height: '60px',
+                            borderRadius: '30px',
+                            fontSize: '24px',
+                            fontWeight: 'bold',
+                            cursor: 'pointer',
+                            border: 'none',
+                            boxShadow: '0 4px 8px rgba(0,0,0,0.2)'
+                        }}
+                    >
+                        Interact
+                    </button>
+                )}
                 <Joystick size={200} sticky={false} baseColor="white" stickColor="grey" move={handleMove} stop={handleStop}></Joystick>
             </div>
         </div>
