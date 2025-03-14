@@ -19,6 +19,7 @@ const Joystix = () => {
     const [isTyping, setIsTyping] = useState(false);
     const [isEventActive, setIsEventActive] = useState(false);
     const [currentEvent, setCurrentEvent] = useState("");
+    const [dialogImage, setDialogImage] = useState("/images/Totem.png");
     const params = useParams();
     const tag = params.tag;
 
@@ -90,31 +91,30 @@ const Joystix = () => {
     };
 
     const handleInteract = async (event) => {
-        //await chat("ok", gender);
-      
-      if(!isTyping){
-        switch (getNamaEvent()) {
-            case "Eggs":
-                npcDialog.text = " "+"This is magic Eggs";
-                npcDialog.image = "/images/Eggs.png";
-                break;
-            case "Totem":
-                npcDialog.text = " "+"This is totem from rock";
-                npcDialog.image = "/images/Totem.png";
-                break;
-            case "Shield":
-                npcDialog.text = " "+"This is Shield to use in war";
-                npcDialog.image = "/images/Shield.png";
-                break;
-            default:
-                npcDialog.text = " "+"Nothing here";
-                npcDialog.image = "";
-                break;
-        }
-        setShowDialog(true);
-        setDialogText(npcDialog.text);
-       // typeWriter(npcDialog.text);
-      }  
+        console.log("neam even="+getNamaEvent());
+        if(!isTyping){
+            switch (getNamaEvent()) {
+                case "Eggs":
+                    console.log("neam even egg");
+                    npcDialog.text = " "+"This is magic Eggs";
+                    setDialogImage("/images/Eggs.png");
+                    break;
+                case "Totem":
+                    npcDialog.text = " "+"This is totem from rock";
+                    setDialogImage("/images/Totem.png");
+                    break;
+                case "Shield":
+                    npcDialog.text = " "+"This is Shield to use in war";
+                    setDialogImage("/images/Shield.png");
+                    break;
+                default:
+                    npcDialog.text = " "+"Nothing here";
+                    setDialogImage("/images/Shield.png");
+                    break;
+            }
+            setShowDialog(true);
+            setDialogText(npcDialog.text);
+        }  
     };
 
     const handleGenderSelect = (selectedGender) => {
@@ -186,7 +186,8 @@ const Joystix = () => {
                         {/* Image Container */}
                         <div className="w-full h-1/2 p-4">
                             <img 
-                                src={npcDialog.image} 
+                                id="gambarEvent"
+                                src={dialogImage} 
                                 alt="NPC"
                                 className="w-full h-full object-contain rounded-lg"
                             />
