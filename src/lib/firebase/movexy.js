@@ -1,6 +1,7 @@
 import { get, ref, set, update } from "firebase/database";
 import { database } from "./firebase";
 
+let Koleksi = false;
 let isEvent = false;
 let namaEvent = ""; // Variable untuk menyimpan nama event
 export const updatepersecond = async (gender) => {
@@ -15,7 +16,11 @@ export const updatepersecond = async (gender) => {
   if (snapshot.exists()) {
       isEvent = snapshot.val();
   }
-
+  const koleksiRef = ref(database, `count/${gen}/Koleksi`);
+  const snapshotKol = await get(koleksiRef);
+  if (snapshotKol.exists()) {
+      Koleksi = snapshotKol.val();
+  }
   // Get event name value from Firebase
   const eventNameRef = ref(database, `count/${gen}/event`);
   const eventSnapshot = await get(eventNameRef);
@@ -39,11 +44,18 @@ export const updatemove = async (x,y,gender) => {
     await set(ref(database, `count/${gen}/moveY`), my);
     
 }
-
+export const KoleksitoFalse = async (gender) => {
+  let mg=gender;
+  var gen="Demo";
+  if(mg === "female"){
+    gen="Demo2";
+  }
+  await set(ref(database, `count/${gen}/Koleksi`), false);
+}
 // Export isEvent dan namaEvent
 export const getIsEvent = () => isEvent;
 export const getNamaEvent = () => namaEvent;
-
+export const getKoleksi = () => Koleksi;
 export const chat = async (chtstring,gender) => {
   
   let cht=chtstring;

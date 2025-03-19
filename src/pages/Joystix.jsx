@@ -6,7 +6,7 @@ import BackIcon from "../components/BackIcon";
 import { sanitizeDOM } from "../lib/sanitizeDOM";
 import LoadingScreen from "../components/LoadingScreen";
 import { Joystick } from 'react-joystick-component';
-import { updatemove, getIsEvent, getNamaEvent, updatepersecond } from "../lib/firebase/movexy";
+import { updatemove, getIsEvent, getNamaEvent,getKoleksi,KoleksitoFalse, updatepersecond } from "../lib/firebase/movexy";
 import { chat } from "../lib/firebase/movexy";
 
 const Joystix = () => {
@@ -19,7 +19,10 @@ const Joystix = () => {
     const [isTyping, setIsTyping] = useState(false);
     const [isEventActive, setIsEventActive] = useState(false);
     const [currentEvent, setCurrentEvent] = useState("");
+    const [Koleksi, setCurrentKoleksi] = useState("");
+    
     const [dialogImage, setDialogImage] = useState("/images/Totem.png");
+    const [collectionCount, setCollectionCount] = useState(0);
     const params = useParams();
     const tag = params.tag;
 
@@ -65,8 +68,14 @@ const Joystix = () => {
         await updatepersecond(gender);
         setIsEventActive(getIsEvent());
         setCurrentEvent(getNamaEvent());
-
-       
+        setCurrentKoleksi(getKoleksi());
+        if (getKoleksi()) {
+            // Update Firebase to set Koleksi to false
+        
+            KoleksitoFalse(gender);    
+            // Increment collection counter (max 7)
+            setCollectionCount(prev => Math.min(prev + 1, 7));
+        }
     };
     const handleMove = async (event) => {
         await updatemove(event.x, event.y, gender);
@@ -93,6 +102,9 @@ const Joystix = () => {
     const handleInteract = async (event) => {
         console.log("neam even="+getNamaEvent());
         if(!isTyping){
+            // Check if this is a new collection
+           
+
             switch (getNamaEvent()) {
                 case "Eggs":
                     console.log("neam even egg");
@@ -217,6 +229,14 @@ const Joystix = () => {
             )}
 
             <div id="joysticon" style={{ position: 'absolute', bottom: 15, left: '50%', transform: 'translateX(-50%)', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '20px' }}>
+                {/* Collection Counter */}
+            
+                    <div className="bg-white px-4 py-2 rounded-lg text-xl font-bold text-primary-darker">
+                        Koleksi: {collectionCount}/7
+                    </div>
+            
+                
+                {/* Interact Button */}
                 {isEventActive && (
                     <button 
                         onClick={handleInteract}
