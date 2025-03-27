@@ -52,6 +52,16 @@ export const KoleksitoFalse = async (gender) => {
   }
   await set(ref(database, `count/${gen}/Koleksi`), false);
 }
+
+export const onlineGender = async (gender, isOnline) => {
+  let mg=gender;
+  var gen="Demo";
+  if(mg === "female"){
+    gen="Demo2";
+  }
+  await set(ref(database, `count/${gen}/isOnline`), isOnline);
+}
+
 // Export isEvent dan namaEvent
 export const getIsEvent = () => isEvent;
 export const getNamaEvent = () => namaEvent;

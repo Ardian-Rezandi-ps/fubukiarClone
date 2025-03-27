@@ -6,7 +6,7 @@ import BackIcon from "../components/BackIcon";
 import { sanitizeDOM } from "../lib/sanitizeDOM";
 import LoadingScreen from "../components/LoadingScreen";
 import { Joystick } from 'react-joystick-component';
-import { updatemove, getIsEvent, getNamaEvent,getKoleksi,KoleksitoFalse, updatepersecond } from "../lib/firebase/movexy";
+import { updatemove, getIsEvent, getNamaEvent,getKoleksi,KoleksitoFalse, updatepersecond ,onlineGender} from "../lib/firebase/movexy";
 import { chat } from "../lib/firebase/movexy";
 
 const Joystix = () => {
@@ -23,6 +23,7 @@ const Joystix = () => {
     
     const [dialogImage, setDialogImage] = useState("/images/Totem.png");
     const [collectionCount, setCollectionCount] = useState(0);
+    const [showOkButton, setShowOkButton] = useState(false);
     const params = useParams();
     const tag = params.tag;
 
@@ -66,7 +67,7 @@ const Joystix = () => {
         if (!gender) return; // Guard clause if gender is not set
         
         await updatepersecond(gender);
-        setIsEventActive(getIsEvent());
+       
         setCurrentEvent(getNamaEvent());
         setCurrentKoleksi(getKoleksi());
         if (getKoleksi()) {
@@ -119,6 +120,11 @@ const Joystix = () => {
                     npcDialog.text = " "+"This is Shield to use in war";
                     setDialogImage("/images/Shield.png");
                     break;
+               case "Vilager Wanita NPC":
+                    npcDialog.text = " "+"Maukah ikut Lomba mencari Benda?";
+                    setDialogImage("/images/Eggs.png");
+                    setShowOkButton(true);
+                    break;
                 default:
                     npcDialog.text = " "+"Nothing here";
                     setDialogImage("/images/Shield.png");
@@ -130,13 +136,28 @@ const Joystix = () => {
     };
 
     const handleGenderSelect = (selectedGender) => {
+        setIsEventActive(true);
         setGender(selectedGender);
+        onlineGender(selectedGender,true);
     };
 
     // Pindahkan definisi npcDialog ke atas agar bisa dimodifikasi
     const npcDialog = {
         text: "",
         image: "/images/Totem.png"
+    };
+
+    const handleBackChoice = () => {
+        onlineGender(gender,false);
+         // Reset gender to allow selection again
+    };
+
+    const handleLogout = () => {
+        console.log("log klik");    
+        handleBackChoice();
+        setTimeout(() => {
+            window.location.href = '/'; // Kembali ke halaman utama setelah 2 detik
+        }, 2000);
     };
 
     if (isLoading) {
@@ -149,47 +170,63 @@ const Joystix = () => {
         return (
             
             <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', height: '100vh' }}>
-                   <BackIcon />
+               
                 <h1 style={{color:'white'}}>Pilih Player:</h1>     
                 <br></br>
                 <button style={{ backgroundColor: 'white', width:'250px', fontSize: '30px', padding: '10px 20px', margin: '10px' }} onClick={() => handleGenderSelect('male')}>Raja</button>
                 <br></br>
                 <button style={{ backgroundColor: 'white', width:'250px', fontSize: '30px', padding: '10px 20px', margin: '10px' }} onClick={() => handleGenderSelect('female')}>Ratu</button>
+                <br></br>
+                <br></br>
+                <br></br>
+                <button 
+                    style={{ backgroundColor: 'white', width:'150px', fontSize: '20px', padding: '10px 20px', margin: '10px' }} 
+                    onClick={() => window.location.href = '/'} // Reroute to home
+                >
+                   Kembali
+                 
+                </button>
+           
             </div>
         );
     }
 
     return (
         <div>
-            <div className="flex flex-col items-center gap-4 p-4">
-                <BackIcon />
-                
+            <button 
+                onClick={handleLogout}
+                style={{ position: 'absolute', top: '10px', left: '10px', backgroundColor: 'white', padding: '10px', borderRadius: '5px' }}
+            >
+                Logout
+            </button>
+            
+    
                 {/* Chat Template Toggle dan Grid */}
-                <div className="w-[90%] max-w-md">
-                    <button 
-                        onClick={() => setShowChatGrid(!showChatGrid)}
-                        className="bg-primary-orange text-white px-4 py-2 rounded-t-lg font-bold w-full"
-                    >
-                        {showChatGrid ? "Tutup Chat" : "Buka Chat"}
-                    </button>
+                {/* <div className="w-[90%] max-w-md"> */}
+                {/*     <button  */}
+                {/*         onClick={() => setShowChatGrid(!showChatGrid)} */}
+                {/*         className="bg-primary-orange text-white px-4 py-2 rounded-t-lg font-bold w-full" */}
+                {/*     > */}
+                {/*         {showChatGrid ? "Tutup Chat" : "Buka Chat"} */}
+                {/*     </button> */}
                     
-                    {showChatGrid && (
-                        <div className="bg-primary-darker p-4 rounded-b-lg rounded-tr-lg w-full">
-                            <div className="grid grid-cols-3 gap-2 w-full">
-                                {chatTemplates.map((template, index) => (
-                                    <button
-                                        key={index}
-                                        onClick={() => handleChatTemplate(template)}
-                                        className="bg-white text-primary-darker px-2 py-3 rounded-lg text-sm hover:bg-primary-orange hover:text-white transition-colors w-full break-words"
-                                    >
-                                        {template}
-                                    </button>
-                                ))}
-                            </div>
-                        </div>
-                    )}
-                </div>
-            </div>
+                {/*     {showChatGrid && ( */}
+                {/*         <div className="bg-primary-darker p-4 rounded-b-lg rounded-tr-lg w-full"> */}
+                {/*             <div className="grid grid-cols-3 gap-2 w-full"> */}
+                {/*                 {chatTemplates.map((template, index) => ( */}
+                {/*                     <button */}
+                {/*                         key={index} */}
+                {/*                         onClick={() => handleChatTemplate(template)} */}
+                {/*                         className="bg-white text-primary-darker px-2 py-3 rounded-lg text-sm hover:bg-primary-orange hover:text-white transition-colors w-full break-words" */}
+                {/*                     > */}
+                {/*                         {template} */}
+                {/*                     </button> */}
+                {/*                 ))} */}
+                {/*             </div> */}
+                {/*         </div> */}
+                {/*     )} */}
+                {/* </div> */}
+
 
             {/* Dialog Box */}
             {showDialog && (
@@ -215,12 +252,32 @@ const Joystix = () => {
                             </div>
                             {!isTyping && (
                                 <div className="flex justify-center pb-4">
-                                    <button 
-                                        onClick={() => setShowDialog(false)}
-                                        className="bg-primary-orange text-white px-8 py-3 rounded-xl text-lg font-bold hover:bg-primary-orange/90 transition-colors"
-                                    >
-                                        Tutup
-                                    </button>
+                                    {showOkButton ? (
+                                        <>
+                                            <button 
+                                                onClick={() => {
+                                                    setShowDialog(false);
+                                                    // Tambahkan logika untuk OK di sini jika diperlukan
+                                                }}
+                                                className="bg-primary-orange text-white px-8 py-3 rounded-xl text-lg font-bold hover:bg-primary-orange/90 transition-colors"
+                                            >
+                                                OK
+                                            </button>
+                                            <button 
+                                                onClick={() => setShowDialog(false)}
+                                                className="bg-gray-300 text-black px-8 py-3 rounded-xl text-lg font-bold hover:bg-gray-400 transition-colors ml-4"
+                                            >
+                                                Batal
+                                            </button>
+                                        </>
+                                    ) : (
+                                        <button 
+                                            onClick={() => setShowDialog(false)}
+                                            className="bg-primary-orange text-white px-8 py-3 rounded-xl text-lg font-bold hover:bg-primary-orange/90 transition-colors"
+                                        >
+                                            Tutup
+                                        </button>
+                                    )}
                                 </div>
                             )}
                         </div>
@@ -231,13 +288,13 @@ const Joystix = () => {
             <div id="joysticon" style={{ position: 'absolute', bottom: 15, left: '50%', transform: 'translateX(-50%)', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '20px' }}>
                 {/* Collection Counter */}
             
-                    <div className="bg-white px-4 py-2 rounded-lg text-xl font-bold text-primary-darker">
+                    <div id="ketkoleksi" className="bg-white px-4 py-2 rounded-lg text-xl font-bold text-primary-darker">
                         Koleksi: {collectionCount}/7
                     </div>
             
                 
                 {/* Interact Button */}
-                {isEventActive && (
+              
                     <button 
                         onClick={handleInteract}
                         style={{ 
@@ -254,7 +311,7 @@ const Joystix = () => {
                     >
                         Interact
                     </button>
-                )}
+             
                 <Joystick size={200} sticky={false} baseColor="white" stickColor="grey" move={handleMove} stop={handleStop}></Joystick>
             </div>
         </div>
