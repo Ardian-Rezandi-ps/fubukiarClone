@@ -6,7 +6,8 @@ import BackIcon from "../components/BackIcon";
 import { sanitizeDOM } from "../lib/sanitizeDOM";
 import LoadingScreen from "../components/LoadingScreen";
 import { Joystick } from 'react-joystick-component';
-import { updatemove, getIsEvent, getNamaEvent,getKoleksi,KoleksitoFalse, updatepersecond ,onlineGender} from "../lib/firebase/movexy";
+import { updatemove, getIsEvent, getNamaEvent,getKoleksi,KoleksitoFalse, updatepersecond 
+    ,onlineGender, KoleksiHitung, getJumlahkol} from "../lib/firebase/movexy";
 import { chat } from "../lib/firebase/movexy";
 
 const Joystix = () => {
@@ -69,14 +70,15 @@ const Joystix = () => {
         await updatepersecond(gender);
        
         setCurrentEvent(getNamaEvent());
-        setCurrentKoleksi(getKoleksi());
-        if (getKoleksi()) {
+        //setCurrentKoleksi(getKoleksi());
+      //  if (getKoleksi()) {
             // Update Firebase to set Koleksi to false
         
-            KoleksitoFalse(gender);    
+            KoleksitoFalse(gender); 
+            KoleksiHitung(gender);  
             // Increment collection counter (max 7)
-            setCollectionCount(prev => Math.min(prev + 1, 7));
-        }
+            setCollectionCount(getJumlahkol());
+       // }
     };
     const handleMove = async (event) => {
         await updatemove(event.x, event.y, gender);
@@ -191,6 +193,24 @@ const Joystix = () => {
         );
     }
 
+    if (collectionCount >= 7) {
+        return (
+            <div className="flex flex-col items-center justify-center h-screen bg-primary-darker text-white">
+                <h1 className="text-4xl font-bold  justify-center">Kamu Memenangkan Permainan Ini!</h1>
+                <div className="flex justify-center">
+                    <img src="/images/correct.png" alt="Congratulations" className="w-1/2" />
+                </div>
+                <p id="selamat" className="mt-4 text-lg  justify-center">Selamat!</p>
+                <button 
+                    onClick={() => window.location.href = '/'} // Reroute to home
+                    className="mt-6 bg-primary-orange text-white px-4 py-2 rounded-lg"
+                >
+                    Kembali ke Beranda
+                </button>
+            </div>
+        );
+    }
+
     return (
         <div>
             <button 
@@ -265,8 +285,8 @@ const Joystix = () => {
                                             </button>
                                             <button 
                                                 onClick={() => setShowDialog(false)}
-                                                className="bg-gray-300 text-black px-8 py-3 rounded-xl text-lg font-bold hover:bg-gray-400 transition-colors ml-4"
-                                            >
+                                                className="bg-primary-orange text-white px-8 py-3 rounded-xl text-lg font-bold hover:bg-primary-orange/90 transition-colors"
+                                              >
                                                 Batal
                                             </button>
                                         </>
