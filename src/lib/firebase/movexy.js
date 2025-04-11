@@ -1,6 +1,6 @@
 import { get, ref, set, update } from "firebase/database";
 import { database } from "./firebase";
-
+let lastItem = false;
 let Koleksi = false;
 let isEvent = false;
 let jumlahkol = 0;
@@ -21,6 +21,13 @@ export const updatepersecond = async (gender) => {
   const snapshotKol = await get(koleksiRef);
   if (snapshotKol.exists()) {
       Koleksi = snapshotKol.val();
+  }
+
+  const lastitemRef = ref(database, `count/lastItemGet`);
+  const lastitemKol = await get(lastitemRef);
+  if ( lastitemKol.exists()) {
+    console.log="val last="+lastitemKol.val();
+     lastItem= lastitemKol.val();
   }
   // Get event name value from Firebase
   const eventNameRef = ref(database, `count/${gen}/event`);
@@ -78,6 +85,7 @@ export const onlineGender = async (gender, isOnline) => {
 export const getIsEvent = () => isEvent;
 export const getNamaEvent = () => namaEvent;
 export const getKoleksi = () => Koleksi;
+export const getLastItem = () => lastItem;
 export const getJumlahkol = () => jumlahkol;
 export const chat = async (chtstring,gender) => {
   
