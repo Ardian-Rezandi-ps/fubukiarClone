@@ -7,7 +7,7 @@ import { sanitizeDOM } from "../lib/sanitizeDOM";
 import LoadingScreen from "../components/LoadingScreen";
 import { Joystick } from 'react-joystick-component';
 import { updatemove, getIsEvent, getNamaEvent,getKoleksi,KoleksitoFalse, updatepersecond 
-    ,onlineGender, KoleksiHitung, getJumlahkol,getLastItem} from "../lib/firebase/movexy";
+    ,onlineGender, KoleksiHitung, getJumlahkol,getLastItem,getGrupItem} from "../lib/firebase/movexy";
 import { chat } from "../lib/firebase/movexy";
 
 const Joystix = () => {
@@ -26,14 +26,15 @@ const Joystix = () => {
     const [collectionCount, setCollectionCount] = useState(0);
     const [showOkButton, setShowOkButton] = useState(false);
     const [showQuestInfo, setShowQuestInfo] = useState(false);
-    const [lastItemGet, setLastItemGet] = useState(null);
+    const [lastItemGet, setLastItemGet] = useState("");
+    const [grupItemGet, setGrupItem] = useState(1);
+    //const [lastItemArray,setLastArray] = useState("");
     const params = useParams();
     const tag = params.tag;
-
     const chatTemplates = [
-        "Halo", "Apa kabar?", "Selamat pagi",
-        "Permisi", "Senang bertemu", "Sampai jumpa",
-        "Terima kasih", "Maaf", "Bisa bantu?"
+        "Halo", "Apa kabar?", "Mana itemnya ya?",
+        "Permisi", "Ayo kesini", "Sampai jumpa",
+        "Terima kasih", "Ayo Berpencar", "Lihat teliti"
     ];
 
     const handleChatTemplate = async (message) => {
@@ -73,7 +74,11 @@ const Joystix = () => {
         KoleksiHitung(gender);  
         setCollectionCount(getJumlahkol());
         setLastItemGet(getLastItem());
-    };
+       // window.console.log('itemlastItemGet='+lastItemGet);
+        setGrupItem(getGrupItem());
+        const lastItemArrayx = lastItemGet.split("|");
+      //  window.console.log('itemke1='+ lastItemArrayx[1]);
+    }
     const handleMove = async (event) => {
         await updatemove(event.x, event.y, gender);
        
@@ -161,7 +166,7 @@ const Joystix = () => {
         }, 2000);
     };
 
-    const questItems = [
+    const questItems1 = [
         { name: "Papeda", collected: false },
         { name: "Parang", collected: false },
         { name: "Suling", collected: false },
@@ -169,7 +174,53 @@ const Joystix = () => {
         { name: "Lukisan Kulit Kayu", collected: false },
         { name: "Wor Wanita", collected: false },
     ];
+    const questItems2 = [
+        { name: "Udang Selingkuh", collected: false },
+        { name: "Tenun", collected: false },
+        { name: "Kuskus", collected: false },
+        { name: "Maleo", collected: false },
+        { name: "Batik Kamoro", collected: false },
+        { name: "Pikon", collected: false },
+    ];
+    const questItems3 = [
+        { name: "Kole Kole", collected: false },
+        { name: "Burung Kofiau", collected: false },
+        { name: "Honai", collected: false },
+        { name: "Arborek", collected: false },
+        { name: "Wor Pria", collected: false },
+        { name: "Mantel Emas", collected: false },
+    ];
 
+    const renderQuestItems = () => {
+        let questItemsToRender = [];
+       // window.console.log('itemgrupx='+grupItemGet);
+        
+        switch (grupItemGet) {
+            case 1:
+                questItemsToRender = questItems1;
+                break;
+            case 2:
+                questItemsToRender = questItems2;
+                break;
+            case 3:
+                questItemsToRender = questItems3;
+                break;
+            default:
+                questItemsToRender = []; // Atau bisa diisi dengan default items jika diperlukan
+                break;
+        }
+
+        return (
+            <ul>
+                {questItemsToRender.map((item, index) => (
+                    <li key={index} className="flex items-center">
+                        <span className="mr-2">{item.collected ? "✔️" : "❌"}</span>
+                        {item.name}
+                    </li>
+                ))}
+            </ul>
+        );
+    };
 
     if (isLoading) {
         return (
@@ -283,59 +334,52 @@ const Joystix = () => {
                     </div>
                 </div>
             )}
+              <div id="questdesc" style={{ position: 'absolute', top: '20%', left: '50%', transform: 'translateX(-50%)', color: 'yellow', fontSize: '24px' }}>
+                    <h1 className="text-3xl font-bold mb-4 justify-center text-white">Quest Items:</h1>
+                    <div id="isiItem" style={{ width: '100%', textAlign: 'left', fontSize:'15   px' }}>
+                    {renderQuestItems()}
+                    </div>
+                </div>
+            <div id="chatzone" style={{ position: 'absolute', top: '10%', left: '50%', transform: 'translateX(-50%)', width: '200px' }}>
+                <button 
+                    onClick={() => setShowChatGrid(!showChatGrid)}
+                    className="bg-primary-orange text-white px-4 py-2 rounded font-bold w-full text-sm"
+                >
+                    {showChatGrid ? "Tutup Chat" : "Buka Chat"}
+                </button>
+                
+                {showChatGrid && (
+                    <div className="bg-primary-darker p-4 rounded-b-lg rounded-tr-lg w-full">
+                        <div className="grid grid-cols-1 gap-2 w-full max-h-[200px] overflow-y-auto scrollbar-thick scrollbar-thumb-primary-orange scrollbar-track-white pr-4">
+                            {chatTemplates.map((template, index) => (
+                                <button
+                                    key={index}
+                                    onClick={() => handleChatTemplate(template)}
+                                    className="bg-white text-primary-darker px-2 py-2 rounded-lg text-sm hover:bg-primary-orange hover:text-white transition-colors w-full break-words"
+                                >
+                                    {template}
+                                </button>
+                            ))}
+                        </div>
+                    </div>
+                )}
+            </div>
+           
 
+                
+            
             <div id="joysticon" style={{ position: 'absolute', bottom: 15, left: '50%', transform: 'translateX(-50%)', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '20px' }}>
+              
+               
                 <div id="ketkoleksi" className="bg-white px-4 py-2 rounded-lg text-xl font-bold text-primary-darker">
                     Koleksi: {collectionCount}/6
                 </div>
-                <button 
-                    onClick={() => setShowQuestInfo(true)}
-                    className="bg-primary-orange text-white px-4 py-2 rounded-lg mt-2"
-                >
-                    Quest Info
-                </button>
+               
             
-                <button 
-                    onClick={handleInteract}
-                    style={{ 
-                        backgroundColor: 'white',
-                        width: '200px',
-                        height: '60px',
-                        borderRadius: '30px',
-                        fontSize: '24px',
-                        fontWeight: 'bold',
-                        cursor: 'pointer',
-                        border: 'none',
-                        boxShadow: '0 4px 8px rgba(0,0,0,0.2)'
-                    }}
-                >
-                    Interact
-                </button>
              
                 <Joystick size={200} sticky={false} baseColor="white" stickColor="grey" move={handleMove} stop={handleStop}></Joystick>
             </div>
 
-            {showQuestInfo && (
-                <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-                    <div className="bg-white w-full h-full p-6 rounded-lg">
-                        <h1 className="text-xl font-bold mb-4 justify-center">Quest Items</h1>
-                        <ul>
-                            {questItems.map((item, index) => (
-                                <li key={index} className="flex items-center">
-                                    <span className="mr-2">{item.collected ? "✔️" : "❌"}</span>
-                                    {item.name}
-                                </li>
-                            ))}
-                        </ul>
-                        <button 
-                            onClick={() => setShowQuestInfo(false)}
-                            className="bg-primary-orange text-white px-4 py-2 rounded-lg mt-4"
-                        >
-                            Close
-                        </button>
-                    </div>
-                </div>
-            )}
         </div>
     );
 };

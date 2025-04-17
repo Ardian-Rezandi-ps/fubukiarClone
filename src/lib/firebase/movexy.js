@@ -1,9 +1,10 @@
 import { get, ref, set, update } from "firebase/database";
 import { database } from "./firebase";
-let lastItem = false;
+let lastItem = "";
 let Koleksi = false;
 let isEvent = false;
 let jumlahkol = 0;
+let grupTerpilih = 1;
 let namaEvent = ""; // Variable untuk menyimpan nama event
 export const updatepersecond = async (gender) => {
   let mg=gender;
@@ -23,11 +24,18 @@ export const updatepersecond = async (gender) => {
       Koleksi = snapshotKol.val();
   }
 
-  const lastitemRef = ref(database, `count/lastItemGet`);
+  const lastitemRef = ref(database, `count/itemTerkumpul`);
   const lastitemKol = await get(lastitemRef);
   if ( lastitemKol.exists()) {
-    console.log="val last="+lastitemKol.val();
+  //  console.log="val last="+lastitemKol.val();
      lastItem= lastitemKol.val();
+  }
+  const grupitemRef = ref(database, `count/grupItem`);
+  const grupitemKol = await get(grupitemRef);
+  if ( grupitemKol.exists()) {
+   // window.console.log('itemxy='+grupitemKol.val());
+   // console.log="val last="+lastitemKol.val();
+     grupTerpilih= grupitemKol.val();
   }
   // Get event name value from Firebase
   const eventNameRef = ref(database, `count/${gen}/event`);
@@ -86,6 +94,7 @@ export const getIsEvent = () => isEvent;
 export const getNamaEvent = () => namaEvent;
 export const getKoleksi = () => Koleksi;
 export const getLastItem = () => lastItem;
+export const getGrupItem = () => grupTerpilih;
 export const getJumlahkol = () => jumlahkol;
 export const chat = async (chtstring,gender) => {
   
