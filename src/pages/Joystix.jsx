@@ -172,7 +172,8 @@ const Joystix = () => {
         { name: "Suling", collected: false },
         { name: "Cendrawasih", collected: false },
         { name: "Lukisan Kulit Kayu", collected: false },
-        { name: "Wor Wanita", collected: false },
+        { name: "Wor Wanita", collected: false }, 
+        { name: "Telur Emas", collected: false }
     ];
     const questItems2 = [
         { name: "Udang Selingkuh", collected: false },
@@ -180,7 +181,8 @@ const Joystix = () => {
         { name: "Kuskus", collected: false },
         { name: "Maleo", collected: false },
         { name: "Batik Kamoro", collected: false },
-        { name: "Pikon", collected: false },
+        { name: "Pikon", collected: false }, 
+        { name: "Telur Emas", collected: false }
     ];
     const questItems3 = [
         { name: "Kole Kole", collected: false },
@@ -189,6 +191,7 @@ const Joystix = () => {
         { name: "Arborek", collected: false },
         { name: "Wor Pria", collected: false },
         { name: "Mantel Emas", collected: false },
+        { name: "Telur Emas", collected: false }
     ];
 
     const renderQuestItems = () => {
@@ -253,7 +256,7 @@ const Joystix = () => {
         );
     }
 
-    if (collectionCount >= 6) {
+    if (collectionCount >= 7) {
         return (
             <div className="flex flex-col items-center justify-center h-screen bg-primary-darker text-white">
                 <h1 className="text-4xl font-bold  justify-center">Kamu Memenangkan Permainan Ini!</h1>
@@ -372,7 +375,7 @@ const Joystix = () => {
               
                
                 <div id="ketkoleksi" className="px-4 py-2 rounded-lg text-xl font-bold text-white">
-                    Koleksi: {collectionCount}/6
+                    Koleksi: {collectionCount}/7
                 </div>
                
             
