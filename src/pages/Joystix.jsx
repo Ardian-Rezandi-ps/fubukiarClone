@@ -336,7 +336,7 @@ const Joystix = () => {
             )}
               <div id="questdesc" style={{ position: 'absolute', top: '20%', left: '50%', transform: 'translateX(-50%)', color: 'yellow', fontSize: '24px' }}>
                     <h1 className="text-3xl font-bold mb-4 justify-center text-white">Quest Items:</h1>
-                    <div id="isiItem" style={{ width: '100%', textAlign: 'left', fontSize:'15   px' }}>
+                    <div id="isiItem" style={{ width: '100%', textAlign: 'left', fontSize:'14px' }}>
                     {renderQuestItems()}
                     </div>
                 </div>
@@ -371,7 +371,7 @@ const Joystix = () => {
             <div id="joysticon" style={{ position: 'absolute', bottom: 15, left: '50%', transform: 'translateX(-50%)', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '20px' }}>
               
                
-                <div id="ketkoleksi" className="bg-white px-4 py-2 rounded-lg text-xl font-bold text-primary-darker">
+                <div id="ketkoleksi" className="px-4 py-2 rounded-lg text-xl font-bold text-white">
                     Koleksi: {collectionCount}/6
                 </div>
                
