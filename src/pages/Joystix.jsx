@@ -28,13 +28,13 @@ const Joystix = () => {
     const [showQuestInfo, setShowQuestInfo] = useState(false);
     const [lastItemGet, setLastItemGet] = useState("");
     const [grupItemGet, setGrupItem] = useState(1);
-    //const [lastItemArray,setLastArray] = useState("");
+  // const [lastItemArray,setLastArray] = useState(null);
     const params = useParams();
     const tag = params.tag;
     const chatTemplates = [
         "Halo", "Apa kabar?", "Mana itemnya ya?",
         "Permisi", "Ayo kesini", "Sampai jumpa",
-        "Terima kasih", "Ayo Berpencar", "Lihat teliti"
+        "Terima kasih", "Ayo Berpencar", "Lihat dengan teliti"
     ];
 
     const handleChatTemplate = async (message) => {
@@ -56,7 +56,7 @@ const Joystix = () => {
     useEffect(() => {
         const interval = setInterval(async () => {
             await handleupdatepersecond();
-        }, 2000);
+        }, 200);
 
         return () => clearInterval(interval);
     }, [gender]);
@@ -76,8 +76,13 @@ const Joystix = () => {
         setLastItemGet(getLastItem());
        // window.console.log('itemlastItemGet='+lastItemGet);
         setGrupItem(getGrupItem());
-        const lastItemArrayx = lastItemGet.split("|");
-      //  window.console.log('itemke1='+ lastItemArrayx[1]);
+       // window.console.log('grupItemGet='+ grupItemGet); 
+     //   const lastItemArrayx = lastItemGet.split("|");
+     //   setLastArray(lastItemArrayx);
+       // questItemsToRender[0].collected=true;
+     //  window.console.log('itemke1='+ lastItemArray);
+     
+      //  renderQuestItems();
     }
     const handleMove = async (event) => {
         await updatemove(event.x, event.y, gender);
@@ -196,7 +201,6 @@ const Joystix = () => {
 
     const renderQuestItems = () => {
         let questItemsToRender = [];
-       // window.console.log('itemgrupx='+grupItemGet);
         
         switch (grupItemGet) {
             case 1:
@@ -209,9 +213,19 @@ const Joystix = () => {
                 questItemsToRender = questItems3;
                 break;
             default:
-                questItemsToRender = []; // Atau bisa diisi dengan default items jika diperlukan
+                questItemsToRender = [];
                 break;
         }
+
+        const lastItemArrayx = lastItemGet.split("|");
+        
+        // Periksa setiap item dalam questItemsToRender
+        questItemsToRender.forEach((item, index) => {
+            // Periksa apakah nama item ada dalam lastItemArrayx
+            if (lastItemArrayx.includes(item.name)) {
+                questItemsToRender[index].collected = true;
+            }
+        });
 
         return (
             <ul>
