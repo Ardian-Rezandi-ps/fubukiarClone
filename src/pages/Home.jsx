@@ -83,15 +83,9 @@ const Home = () => {
                 <div className="max-w-2xl text-white text-base leading-relaxed mb-8 text-center">
                     
                     <p className="mb-8">
-                    Di sebuah desa yang tenang dan subur, tinggallah sepasang suami istri yang sederhana.
-    Setiap hari, mereka berdoa dengan tulus… memohon agar diberi keturunan.
-Bukan untuk kekuasaan, tapi demi cinta dan keluarga.
-Suatu pagi, setelah berdoa seperti biasa, mereka pergi ke hutan mencari kayu.
-Namun, hari itu tak seperti biasanya.
-Di tengah hutan, mereka menemukan sesuatu yang aneh <br></br><b>—enam telur besar berwarna pucat, bercahaya lembut.</b><br></br>
-Dengan hati yang penuh harap, mereka membawa telur-telur itu pulang.
-Mereka belum tahu…<br></br>
-<b>Enam telur itu akan mengubah hidup mereka selamanya.</b></p>
+                    Di sebuah desa yang damai, hiduplah sepasang suami istri yang sangat menginginkan seorang anak. Setiap hari mereka berdoa dengan tulus, berharap keajaiban datang ke dalam hidup mereka.
+Suatu pagi, mereka memutuskan pergi ke hutan untuk mencari kayu bakar…<br></br> <b>Tanpa mereka tahu, hari itu akan mengubah segalanya.</b>
+</p>
                    
                     <button
                         onClick={handleContinueToGame}

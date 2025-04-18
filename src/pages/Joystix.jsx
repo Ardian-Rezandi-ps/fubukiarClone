@@ -247,37 +247,47 @@ const Joystix = () => {
 
     if (gender === null) {
         return (
-            
             <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', height: '100vh' }}>
-               
-                <h1 style={{color:'white'}}>Pilih Player:</h1>     
+                <h1 style={{color:'white'}}>Pilih Pemain:</h1>     
                 <br></br>
-                <button style={{ backgroundColor: 'white', width:'250px', fontSize: '30px', padding: '10px 20px', margin: '10px' }} onClick={() => handleGenderSelect('male')}>Raja</button>
+                <button 
+                    className="bg-yellow-400 hover:bg-yellow-500 text-black font-bold py-3 px-6 rounded-full transform transition-all duration-200 active:scale-95 w-64 text-2xl shadow-lg"
+                    onClick={() => handleGenderSelect('male')}
+                >
+                    Suami
+                </button>
                 <br></br>
-                <button style={{ backgroundColor: 'white', width:'250px', fontSize: '30px', padding: '10px 20px', margin: '10px' }} onClick={() => handleGenderSelect('female')}>Ratu</button>
+                <button 
+                    className="bg-yellow-400 hover:bg-yellow-500 text-black font-bold py-3 px-6 rounded-full transform transition-all duration-200 active:scale-95 w-64 text-2xl shadow-lg"
+                    onClick={() => handleGenderSelect('female')}
+                >
+                    Istri
+                </button>
                 <br></br>
                 <br></br>
                 <br></br>
                 <button 
-                    style={{ backgroundColor: 'white', width:'150px', fontSize: '20px', padding: '10px 20px', margin: '10px' }} 
+                    className="bg-pink-400 hover:bg-pink-500 text-black font-bold py-2 px-4 rounded-full transform transition-all duration-200 active:scale-95 w-40 text-xl shadow-lg"
                     onClick={() => window.location.href = '/'}
                 >
-                   Kembali
-                 
+                    Kembali
                 </button>
-           
             </div>
         );
     }
 
     if (collectionCount >= 7) {
         return (
-            <div className="flex flex-col items-center justify-center h-screen bg-primary-darker text-white">
-                <h1 className="text-4xl font-bold  justify-center">Kamu Memenangkan Permainan Ini!</h1>
+            <div id="selamatx" className="flex flex-col items-center justify-center h-screen bg-primary-darker text-white">
+                <h1 className="text-4xl font-bold text-center">Semua Telur ditemukan!</h1>
                 <div className="flex justify-center">
                     <img src="/images/correct.png" alt="Congratulations" className="w-1/2 justify-center" />
                 </div>
-                <p id="selamat" className="mt-4 text-lg  justify-center">Selamat!</p>
+                <p id="selamat" className="mt-4 text-base text-center">
+                    Pasangan itu membawa pulang keenam telur dengan penuh rasa ingin tahu dan harapan. <br></br>
+                    Mereka tak tahu dari mana asalnya,tapi mereka yakin..<br></br>
+                    <b>—ini adalah jawaban dari doa mereka.</b>
+                </p>
                 <button 
                     onClick={() => window.location.href = '/'}
                     className="mt-6 bg-primary-orange text-white px-4 py-2 rounded-lg justify-center"
