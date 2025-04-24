@@ -21,50 +21,59 @@ const Guide = () => {
         navigate("/start");
     };
 
-    useEffect(() => {
-        const fetchContent = async () => {
-            const contents = await getContentSettingByTag("guide", "asc");
-            setSelectedContent(contents);
-            setIsLoading(false);
-        };
-        fetchContent();
-    }, []);
+  
 
-    if (isLoading) {
-        return (
-            <LoadingScreen />
-        );
-    }
+    const paragraphs = {
+        1: "Kumpulkan 14 item tersembunyi di dalam cerita interaktif ini. Gunakan petunjuk di setiap panel, lalu ikuti kuis seru untuk menguji pengetahuan Anda!",
+        2: "Ingin mengetahui lebih banyak tentang setiap cerita? Pindai gambar dengan kamera ponsel Anda untuk membuka informasi tambahan.",
+        3: "Tekan tombol “Kuis” untuk menjawab kuisnya. Dapatkan nilai lebih dari 100 untuk ditukar dengan hadiah dari indonesia Kaya. Semakin besar nilaimu, semakin menarik hadiahnya!",
+        4: "Cari item-item tersembunyi di setiap panel. Saat Anda menemukannya, item akan otomatis tersimpan dalam koleksi Anda.",
+        5: "Setelah mengumpulkan semua item tersembunyi, pastikan untuk memeriksa koleksi Anda untuk melihat semua temuan."
+       
+    };
 
     return (
         <div className="w-full max-h-screen relative">
-            <BackIcon className="absolute left-2 top-2 z-10" />
+                      <button 
+                onClick={() => navigate(-1)} 
+                className="absolute left-0 top-4 z-10 w-20 h-20"
+            >
+                <img 
+                    src="/images/back.png" 
+                    alt="Back" 
+                    className="w-full h-full object-contain"
+                />
+            </button>
             <Carousel
                 loop={false}
                 positionNavigation="flex justify-between items-center top-1/3"
-                positionPagination="bottom-[7rem] left-1/2 -translate-x-1/2"
+                positionPagination="bottom-[5rem] left-1/2 -translate-x-1/2"
                 handleActiveIndex={handleActiveIndex}
             >
-                {[
-                    ...selectedContent.map((s) => (
-                        <div key={s.title} className="w-full flex-shrink-0 h-screen object-cover text-gray-black bg-primary-orange">
-                            <div className="bg-gray h-1/2">
-                                <img src={s.images[0]} alt="Guide" className="w-full h-3/5 object-cover absolute" />
-                            </div>
-                            <div className="bg-guide flex justify-start items-center flex-col gap-2 px-16 py-5 h-1/2">
-                                <h1 className="text-2xl font-bold">{s.title}</h1>
-                                <hr className="border-t-4 border-gray-black w-full h-1" />
-                                <div
-                                    className="text-xs font-light text-center tracking-wide unreset"
-                                    dangerouslySetInnerHTML={{ __html: sanitizeDOM(s.description) }}
-                                ></div>
+                {[1, 2, 3, 4, 5].map((index) => (
+                    <div key={index} className="w-full flex-shrink-0 h-screen object-cover text-gray-black bg-primary-orange">
+                          <div className="bg-gray w-full h-1/2 relative pt-18">
+                            <img 
+                                id="carouselimage" 
+                                src={`/images/carq${index}.png`} 
+                                alt={`Guide ${index}`} 
+                                className="w-full h-full object-cover mt-6" 
+                            />
+                        </div>
+                        <div className="bg-guide flex justify-start items-center flex-col gap-2 px-16 py-5 h-1/2">
+                            <h1 id="carouseljudul" className="text-2xl font-bold">
+                                {`Petunjuk ${index}`}
+                            </h1>
+                            <hr className="border-t-4 border-gray-black w-full h-1" />
+                            <div id="carouselparagraf" className="text-sm font-light text-center tracking-wide unreset max-w-md mx-auto">
+                                <p>{paragraphs[index]}</p>
                             </div>
                         </div>
-                    )),
-                ]}
+                    </div>
+                ))}
             </Carousel>
-            <button onClick={handleNavigate} className="absolute bottom-[4rem] left-1/2 -translate-x-1/2 text-white bg-gray-black px-10 py-2 rounded-full">
-                {activeIndex === selectedContent.length - 1 ? "Selesai" : "Lewati"}
+            <button id="skipbutton" onClick={handleNavigate} className="absolute bottom-[1rem] left-1/2 -translate-x-1/2 text-white bg-gray-black px-10 py-2 rounded-full">
+                {activeIndex === 4 ? "Selesai" : "Lewati"}
             </button>
         </div>
     );
