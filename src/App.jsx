@@ -17,6 +17,7 @@ import ContentSetting from "./pages/dashboard/ContentSetting";
 import Users from "./pages/dashboard/Users";
 import UsersForm from "./pages/dashboard/UsersForm";
 import Home from "./pages/Home";
+import Home2 from "./pages/Home2";
 import DetailImage from "./pages/DetailImage";
 import Quiz from "./pages/dashboard/Quiz";
 import Collection from "./pages/Collection";
@@ -36,7 +37,7 @@ import Claim from "./pages/Claim";
 import LoadingScreen from "./components/LoadingScreen";
 import Report from "./pages/dashboard/Report";
 import Joystix from "./pages/Joystix";
-
+import Aboutcerita from "./pages/Aboutcerita";
 function App() {
     const [isLandscape, setIsLandscape] = useState(false);
     const [isLoading, setIsLoading] = useState(true);
@@ -118,6 +119,8 @@ function App() {
                 <Route path="/profile" element={<ProfileForm />} />
                 <Route path="/privacy-policy" element={<PrivacyPolicy />} />
                 <Route path="/joystix" element={<Joystix />} />
+                <Route path="/Home2" element={<Home2 />} />
+                <Route path="/Aboutcerita" element={<Aboutcerita />} />
             </Route>
             <Route element={<DashboardLayout />}>
                 <Route path="/dashboard" element={<Dashboard />} />

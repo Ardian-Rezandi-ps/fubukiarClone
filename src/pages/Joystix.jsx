@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Carousel from "../components/Carousel";
+import { Link, useNavigate } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import { getContentSettingByTag } from "../lib/firebase/contentSetting";
 import BackIcon from "../components/BackIcon";
@@ -13,6 +14,8 @@ import { chat } from "../lib/firebase/movexy";
 const Joystix = () => {
     const [isLoading, setIsLoading] = React.useState(true);
     const [selectedContent, setSelectedContent] = React.useState(null);
+    const [readygame, setReadyGame] = React.useState(null);
+    const [showIntroStory, setShowIntroStory] = React.useState(false);
     const [gender, setGender] = React.useState(null);
     const [showChatGrid, setShowChatGrid] = React.useState(false);
     const [showDialog, setShowDialog] = useState(false);
@@ -28,6 +31,7 @@ const Joystix = () => {
     const [showQuestInfo, setShowQuestInfo] = useState(false);
     const [lastItemGet, setLastItemGet] = useState("");
     const [grupItemGet, setGrupItem] = useState(1);
+    const [showStory, setShowStory] = React.useState(false);
   // const [lastItemArray,setLastArray] = useState(null);
     const params = useParams();
     const tag = params.tag;
@@ -36,7 +40,31 @@ const Joystix = () => {
         "Permisi", "Ayo kesini", "Sampai jumpa",
         "Terima kasih", "Ayo Berpencar", "Lihat dengan teliti"
     ];
-
+    const navigate = useNavigate();
+    if (showStory) {
+        return (
+            <div className="h-screen w-full flex flex-col items-center justify-center bg-primary-darker p-8">
+               
+               <div className="max-w-2xl text-white text-lg leading-relaxed mb-8 text-center">
+                <h1>Arungi</h1>
+               </div>
+                <div className="max-w-2xl text-white text-base leading-relaxed mb-8 text-center">
+                    
+                    <p className="mb-8">
+                    Di sebuah desa yang damai, hiduplah sepasang suami istri yang sangat menginginkan seorang anak. Setiap hari mereka berdoa dengan tulus, berharap keajaiban datang ke dalam hidup mereka.
+Suatu pagi, mereka memutuskan pergi ke hutan untuk mencari kayu bakar…<br></br> <b>Tanpa mereka tahu, hari itu akan mengubah segalanya.</b>
+</p>
+                   
+                    <button
+                        onClick={handleContinueToGame}
+                        className="bg-primary-orange text-white text-xl font-bold rounded-xl px-10 py-6 hover:bg-primary-orange/90 transition-colors"
+                    >
+                        Mulai Petualangan
+                    </button>
+                </div>
+            </div>
+        );
+    }
     const handleChatTemplate = async (message) => {
         await chat(message, gender);
     };
@@ -149,9 +177,13 @@ const Joystix = () => {
     };
 
     const handleGenderSelect = (selectedGender) => {
-        setIsEventActive(true);
         setGender(selectedGender);
-        onlineGender(selectedGender,true);
+        setShowIntroStory(true);
+    };
+    const handleReadyGame= () => {
+        setReadyGame(true);
+        onlineGender(gender, true);
+        setIsEventActive(true);
     };
 
     const npcDialog = {
@@ -167,7 +199,7 @@ const Joystix = () => {
         console.log("log klik");    
         handleBackChoice();
         setTimeout(() => {
-            window.location.href = '/';
+            navigate('/Home2');
         }, 2000);
     };
 
@@ -198,7 +230,10 @@ const Joystix = () => {
         { name: "Mantel Emas", collected: false },
         { name: "Telur Emas", collected: false }
     ];
-
+    const handleBackmenu = () => {
+        window.console.log("backmenu");
+        navigate('/Home2');
+    };
     const renderQuestItems = () => {
         let questItemsToRender = [];
         
@@ -245,55 +280,171 @@ const Joystix = () => {
         );
     }
 
-    if (gender === null) {
+    if (showIntroStory) {
         return (
-            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', height: '100vh' }}>
-                <h1 style={{color:'white'}}>Pilih Pemain:</h1>     
-                <br></br>
-                <button 
-                    className="bg-yellow-400 hover:bg-yellow-500 text-black font-bold py-3 px-6 rounded-full transform transition-all duration-200 active:scale-95 w-64 text-2xl shadow-lg"
-                    onClick={() => handleGenderSelect('male')}
-                >
-                    Suami
-                </button>
-                <br></br>
-                <button 
-                    className="bg-yellow-400 hover:bg-yellow-500 text-black font-bold py-3 px-6 rounded-full transform transition-all duration-200 active:scale-95 w-64 text-2xl shadow-lg"
-                    onClick={() => handleGenderSelect('female')}
-                >
-                    Istri
-                </button>
-                <br></br>
-                <br></br>
-                <br></br>
-                <button 
-                    className="bg-pink-400 hover:bg-pink-500 text-black font-bold py-2 px-4 rounded-full transform transition-all duration-200 active:scale-95 w-40 text-xl shadow-lg"
-                    onClick={() => window.location.href = '/'}
-                >
-                    Kembali
-                </button>
+            <div className="min-h-screen bg-primary-darker">
+                <div id="bannertop" className="fixed top-0 left-0 w-full z-10">
+                    <div className="relative">
+                        <button 
+                            onClick={() => setShowIntroStory(false)}
+                            className="absolute top-4 left-4 z-20 w-10 h-10"
+                        >
+                            <img 
+                                src="/images/back.png" 
+                                alt="Back" 
+                                className="w-full h-full object-contain"
+                            />
+                        </button>
+                        <img 
+                            src="/images/banner4.png" 
+                            alt="Banner" 
+                            className="w-full h-[25vh] object-cover"
+                        />
+                        <div id="isibaner" className="absolute inset-0 flex flex-col items-center justify-center">
+                            <h1 className="text-3xl font-bold text-white mb-2">Jejak Telur Ajaib</h1>
+                            <p className="text-xl text-white">Petualangan Dimulai</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div className="flex flex-col items-center pt-[30vh] px-6">
+                    <div className="w-full max-w-md mb-6">
+                        <img 
+                            src="/images/arungiIntro.png" 
+                            alt="Story" 
+                            className="w-full object-contain rounded-lg"
+                        />
+                    </div>
+                    
+                    <div className="bg-primary-darker/80 text-white p-6 rounded-lg max-w-md text-center">
+                        <p className="text-lg mb-8">
+                            Di sebuah desa yang damai, hiduplah sepasang suami istri yang sangat menginginkan seorang anak. 
+                            Setiap hari mereka berdoa dengan tulus, berharap keajaiban datang ke dalam hidup mereka.
+                            Suatu pagi, mereka memutuskan pergi ke hutan untuk mencari kayu bakar... 
+                            <br/><br/>
+                            <b>Tanpa mereka tahu, hari itu akan mengubah segalanya.</b>
+                        </p>
+                        
+                        <button 
+                            onClick={() => {
+                                setShowIntroStory(false);
+                                handleReadyGame();
+                            }}
+                            className="bg-primary-orange text-white text-xl font-bold rounded-xl px-10 py-4 hover:bg-primary-orange/90 transition-colors w-full"
+                        >
+                            Mulai
+                        </button>
+                    </div>
+                </div>
             </div>
+        );
+    }
+
+    if (readygame === null) {
+        return (
+            <div id="menugender" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', height: '100vh' }}>
+            <div id="bannertop" className="fixed top-0 left-0 w-full z-10">
+                <div className="relative">
+                    <button 
+                        onClick={() => handleBackmenu()}
+                        className="absolute top-4 left-4 z-20 w-10 h-10"
+                    >
+                        <img 
+                            src="/images/back.png" 
+                            alt="Back" 
+                            className="w-full h-full object-contain"
+                        />
+                    </button>
+                    <img 
+                        src="/images/banner4.png" 
+                        alt="Banner" 
+                        className="w-full h-[25vh] object-cover"
+                    />
+                    <div id="isibaner" className="absolute inset-0 flex flex-col items-center justify-center">
+                        <h1 className="text-3xl font-bold text-white mb-2">Jejak Telur Ajaib</h1>
+                        <p className="text-xl text-white">Pilih Karakter Kamu</p>
+                    </div>
+                </div>
+            </div>
+
+            <div className="flex justify-center gap-4 mt-[30vh]">
+                <div className="flex flex-col items-center">
+                    <img 
+                        src="/images/rajax.png" 
+                        alt="Raja" 
+                        className="w-64 h-64 object-contain mb-4"
+                    />
+                    <button 
+                        className="bg-yellow-400 hover:bg-yellow-500 text-black font-bold py-3 px-6 rounded-full transform transition-all duration-200 active:scale-95 w-40 text-2xl shadow-lg"
+                        onClick={() => handleGenderSelect('male')}
+                    >
+                        Raja
+                    </button>
+                </div>
+
+                <div className="flex flex-col items-center">
+                    <img 
+                        src="/images/ratux.png" 
+                        alt="Ratu" 
+                        className="w-64 h-64 object-contain mb-4"
+                    />
+                    <button 
+                        className="bg-yellow-400 hover:bg-yellow-500 text-black font-bold py-3 px-6 rounded-full transform transition-all duration-200 active:scale-95 w-40 text-2xl shadow-lg"
+                        onClick={() => handleGenderSelect('female')}
+                    >
+                        Ratu
+                    </button>
+                </div>
+            </div>
+
+           
+        </div>
         );
     }
 
     if (collectionCount >= 7) {
         return (
-            <div id="selamatx" className="flex flex-col items-center justify-center h-screen bg-primary-darker text-white">
-                <h1 className="text-4xl font-bold text-center">Semua Telur ditemukan!</h1>
-                <div className="flex justify-center">
-                    <img src="/images/correct.png" alt="Congratulations" className="w-1/2 justify-center" />
+            <div id="selamatx" className="flex flex-col items-center h-screen bg-primary-darker text-white">
+                <div id="bannertop" className="fixed top-0 left-0 w-full z-10">
+                    <div className="relative">
+                        <button 
+                            onClick={() => handleBackmenu()}
+                            className="absolute top-4 left-4 z-20 w-10 h-10"
+                        >
+                            <img 
+                                src="/images/back.png" 
+                                alt="Back" 
+                                className="w-full h-full object-contain"
+                            />
+                        </button>
+                        <img 
+                            src="/images/banner4.png" 
+                            alt="Banner" 
+                            className="w-full h-[25vh] object-cover"
+                        />
+                        <div id="isibaner" className="absolute inset-0 flex flex-col items-center justify-center">
+                            <h1 className="text-3xl font-bold text-white mb-2">Jejak Telur Ajaib</h1>
+                            <p className="text-xl text-white">Cerita Penutup</p>
+                        </div>
+                    </div>
                 </div>
+                
+                <div className="flex flex-col items-center justify-center mt-[30vh]">
+                    <div className="flex justify-center">
+                        <img src="/images/arungioutro.png" alt="Congratulations" className="w-full justify-center" />
+                    </div>
                 <p id="selamat" className="mt-4 text-base text-center">
                     Pasangan itu membawa pulang keenam telur dengan penuh rasa ingin tahu dan harapan. <br></br>
                     Mereka tak tahu dari mana asalnya,tapi mereka yakin..<br></br>
                     <b>—ini adalah jawaban dari doa mereka.</b>
                 </p>
                 <button 
-                    onClick={() => window.location.href = '/'}
+                    onClick={() => handleBackmenu()}
                     className="mt-6 bg-primary-orange text-white px-4 py-2 rounded-lg justify-center"
                 >
-                    Kembali ke Beranda
+                    Kembali
                 </button>
+            </div>
             </div>
         );
     }
