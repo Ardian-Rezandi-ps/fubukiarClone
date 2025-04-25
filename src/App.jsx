@@ -38,6 +38,8 @@ import LoadingScreen from "./components/LoadingScreen";
 import Report from "./pages/dashboard/Report";
 import Joystix from "./pages/Joystix";
 import Aboutcerita from "./pages/Aboutcerita";
+import StoryDetail from "./pages/StoryDetail";
+
 function App() {
     const [isLandscape, setIsLandscape] = useState(false);
     const [isLoading, setIsLoading] = useState(true);
@@ -114,13 +116,14 @@ function App() {
                 <Route path="/guide" element={<Guide />} />
                 <Route path="/claim" element={<Claim />} />
                 <Route path="/collection" element={<Collection />} />
-                <Route path="/collection/:id" element={<DetailImage />} />
+                <Route path="/detail" element={<DetailImage />} />
                 <Route path="/collection/:id/quiz" element={<QuizCarousel />} />
                 <Route path="/profile" element={<ProfileForm />} />
                 <Route path="/privacy-policy" element={<PrivacyPolicy />} />
                 <Route path="/joystix" element={<Joystix />} />
                 <Route path="/Home2" element={<Home2 />} />
                 <Route path="/Aboutcerita" element={<Aboutcerita />} />
+                <Route path="/story-detail" element={<StoryDetail />} />
             </Route>
             <Route element={<DashboardLayout />}>
                 <Route path="/dashboard" element={<Dashboard />} />

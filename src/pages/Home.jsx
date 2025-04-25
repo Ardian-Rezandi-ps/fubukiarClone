@@ -126,7 +126,7 @@ const Home = () => {
                             />
                         </svg>
 
-                        <p className="text-xl">Mulai Jelajahi Karya</p>
+                        <p className="text-xl">Mulai Jelajahi Cerita</p>
                     </Link>
                     <div className="col-span-2 border border-soft-cream bg-primary-darker text-soft-cream rounded-xl text-center p-4 text-xs flex flex-col items-center">
                         {user ? (
