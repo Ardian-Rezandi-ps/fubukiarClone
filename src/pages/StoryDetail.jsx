@@ -31,7 +31,14 @@ Untuk pertama kalinya, Purbasari merasa damai… dan tidak sendiri.
 `,  `Setelah kembali ke istana, Purbasari disambut hangat oleh sang Raja, tapi tidak oleh semua orang.\nPurbararang, kakaknya, merasa tak terima.\n"Kalau memang kau pantas jadi ratu, buktikan lewat sayembara!" tantangnya.\nMaka diumumkan tiga lomba:\nMemasak,\nMenata rambut,\nMemperkenalkan pasangan terbaik.\nRakyat berkumpul untuk menyaksikan.\nPurbararang tampil percaya diri—sementara Purbasari tetap tenang.
 `,  `Dalam lomba memasak, Purbararang menyajikan hidangan mewah,\ntapi rasa masakan Purbasari yang sederhana justru menghangatkan hati semua orang.\nDalam lomba rambut, hiasan dan sisir emas kalah dari kilau alami rambut Purbasari.\nLomba terakhir membuat semua terdiam:\nPurbararang menggandeng pangeran tampan,\nsementara Purbasari menunjuk… seekor lutung.\n"Ini sahabatku," katanya lembut.\nOrang-orang tertawa—tapi tidak lama.\nLutung Kasarung berubah menjadi Pangeran Guru Minda.\nWibawanya memukau semua yang hadir.\nKini tak ada lagi keraguan—Purbasari menang, dalam semua hal yang berarti.
 `,  `Purbasari dan Guru Minda berdiri berdampingan di pelaminan istana.\nTak ada lagi kutukan, tak ada lagi cemburu—hanya cinta dan kedamaian.\nBunga-bunga mekar, rakyat bersorak, dan musik mengalun lembut di seluruh penjuru istana.\nSang Raja tersenyum bangga, menyaksikan putri bungsunya menikah dengan orang yang dipilih oleh hatinya sendiri.\nMereka tidak memerintah dengan kekuatan,\ntapi dengan kelembutan, kasih, dan kejujuran.\nRakyat hidup sejahtera. Istana dipenuhi tawa.\nDan kisah mereka dikenang…\nsebagai bukti bahwa kebaikan akan selalu pulang sebagai pemenang.
-`,  ``,  ``,  ``,  ``,  ``,  ``,  ``
+`,  `Di sebuah desa kecil yang damai,\nhidup sepasang suami istri—raja dan ratu yang bijaksana.\nHidup mereka penuh kasih,\ntapi satu hal masih belum mereka miliki:\nseorang anak.\nSetiap hari mereka berdoa, berharap, menanti.\nHingga suatu pagi, mereka pergi ke hutan untuk mencari kayu.\nNamun yang mereka temukan bukanlah kayu,\nmelainkan enam telur misterius, bercahaya lembut di balik semak-semak.\nMereka saling menatap,\ndan membawa telur-telur itu pulang…\ndengan hati penuh harapan.
+`,  `Beberapa waktu setelah dibawa pulang,\nlima dari enam telur perlahan mulai retak.\nDari dalamnya, lahir empat bayi laki-laki dan satu perempuan.\nMereka sehat, hangat, dan tak bersuara—seolah tahu mereka ditunggu begitu lama.\nSang Raja dan Ratu menangis bahagia.\nSatu telur yang tersisa tetap utuh…\ndan disimpan sebagai tanda, bahwa keajaiban belum selesai.
+`,  `Tahun-tahun berlalu dengan cepat.\nKelima anak itu tumbuh dalam cinta dan kebersamaan.\nDi malam hari, mereka menari di bawah cahaya bulan.\nMusik dan tawa terdengar di halaman rumah kecil mereka.\nHidup mereka sederhana,\ntapi tak pernah kekurangan rasa syukur.
+`,  `Setiap anak menunjukkan bakatnya sendiri:\n🌱 War, si sulung, rajin merawat ladang—menggali tanah dan menanam sayuran.\n🏹 Betani, cekatan dan gesit—berlatih memanah dan membantu berburu makanan.\n🐐 Dohak, tenang dan tangguh—menggembala kambing dan menjaga ternak keluarga.\n🏗️ Mohamad, teliti dan kreatif—menenun atap dan membantu membangun rumah.\n❤️ Tintole, si bungsu, lembut dan penuh perhatian—selalu ada untuk ibu dan saudara-saudaranya.\nMereka berbeda,\ntapi selalu saling melengkapi.
+`,  `Saat anak-anak telah cukup besar,\nsang ayah memanggil keempat putranya ke halaman rumah.\nIa membentangkan peta berisi pulau-pulau di lautan timur.\n"Ini semua akan menjadi milik kalian," katanya.\n"Tapi ingat… kekuasaan bukan untuk diri sendiri—tapi untuk melindungi sesama."
+`,  `Tak lama setelah itu, sang Raja jatuh sakit.\nSeluruh keluarga berkumpul di samping tempat tidurnya.\nDengan suara lemah, ia menatap satu per satu anak-anaknya.\n"Jangan lupakan asal kalian," ucapnya pelan.\nKetika ia berpulang,\nangin terasa hening… dan langit malam tampak lebih gelap dari biasanya.
+`,  `War, Betani, Dohak, dan Mohamad berlayar ke pulau mereka masing-masing.\nDi sana, mereka membangun, menjaga, dan memimpin dengan hati.\nRakyat mencintai mereka.\nPulau-pulau itu pun tumbuh damai di bawah perlindungan mereka.\nMerekalah yang dikenal sebagai Raja Ampat—\nempat saudara, empat pemimpin, satu warisan dari hutan dan langit.\nSementara itu, Tintole tetap tinggal bersama ibunya,\nmenjaga rumah kecil yang menyimpan awal dari segalanya.
+`
   ];
 
   const handleNextPage = () => {
@@ -79,7 +86,9 @@ Untuk pertama kalinya, Purbasari merasa damai… dan tidak sendiri.
       {/* Story Content */}
       <div id="storycontent" className="flex-1 px-5 py-4 bg-white rounded-t-3xl -mt-6 z-10 overflow-y-auto max-h-[calc(100vh-18rem)] shadow-lg">
         <div className="border-b border-gray-300 pb-4 mb-4">
-          <h1 id="judulstory" className="text-3xl font-bold text-black text-center mb-4">Lutung Kasarung</h1>
+          <h1 id="judulstory" className="text-3xl font-bold text-black text-center mb-4">
+            {currentPage >= 13 ? "Empat Raja" : "Lutung Kasarung"}
+          </h1>
          
           <p className="text-black-800 mb-4 border-t-2 text-justify px-3 py-1 leading-relaxed text-xs">
             {dummyParagraphs[currentPage - 1].split('\n').map((line, index) => (
