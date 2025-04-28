@@ -39,6 +39,7 @@ import Report from "./pages/dashboard/Report";
 import Joystix from "./pages/Joystix";
 import Aboutcerita from "./pages/Aboutcerita";
 import StoryDetail from "./pages/StoryDetail";
+import MiniQuiz from "./pages/MiniQuiz";
 
 function App() {
     const [isLandscape, setIsLandscape] = useState(false);
@@ -123,7 +124,8 @@ function App() {
                 <Route path="/joystix" element={<Joystix />} />
                 <Route path="/Home2" element={<Home2 />} />
                 <Route path="/Aboutcerita" element={<Aboutcerita />} />
-                <Route path="/story-detail" element={<StoryDetail />} />
+                <Route path="/story-detail/:cerita" element={<StoryDetail />} />
+                <Route path="/mini-quiz" element={<MiniQuiz />} />
             </Route>
             <Route element={<DashboardLayout />}>
                 <Route path="/dashboard" element={<Dashboard />} />

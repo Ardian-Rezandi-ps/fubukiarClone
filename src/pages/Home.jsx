@@ -158,6 +158,22 @@ const Home = () => {
                     </div>
                 </div>
             </div>
+            {/* Tombol ke dua cerita di bawah 
+            <div className="fixed bottom-0 left-0 right-0 flex gap-4 justify-center bg-white py-4 z-50 border-t border-gray-200">
+                <Link
+                    to="/story-detail/lutung"
+                    className="bg-primary-orange text-white font-bold rounded-xl px-6 py-3 shadow-md text-lg"
+                >
+                    Baca Lutung Kasarung
+                </Link>
+                <Link
+                    to="/story-detail/empat-raja"
+                    className="bg-primary-orange text-white font-bold rounded-xl px-6 py-3 shadow-md text-lg"
+                >
+                    Baca Empat Raja
+                </Link>
+            </div
+            >*/}
         </div>
     );
 };
