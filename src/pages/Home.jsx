@@ -139,7 +139,7 @@ const Home = () => {
                                 </div>
 
                                 <Link to="/collection" className="text-xs pb-2 mt-2 w-3/4 text-center">
-                                    Galeri: {countFromTotal} | Poin: {userPoint || 0}
+                                    Poin: {userPoint || 0}
                                 </Link>
                                 <Link to="/profile" className="bg-primary-orange text-white rounded-xl mt-4 p-2 w-3/4">
                                     {!user.Gender ? "Lengkapi Profile +80 poin" : "Lihat Profil"}

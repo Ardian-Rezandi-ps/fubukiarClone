@@ -97,7 +97,7 @@ const StoryDetail = () => {
       </div>
       
       {/* Back Button */}
-      <Link to="/collection" className="absolute left-4 top-4 z-10 bg-white/30 rounded-full p-2">
+      <Link to="/" className="absolute left-4 top-4 z-10 bg-white/30 rounded-full p-2">
         <img src="/images/back.png" alt="Back" className="w-6 h-6" />
       </Link>
 
@@ -109,7 +109,7 @@ const StoryDetail = () => {
           </h3>
           <p
             ref={paragraphRef}
-            className="text-black-800 mb-0 border-t-2 text-left px-3 py-1 leading-relaxed text-base md:text-lg max-h-80 md:max-h-[60vh] overflow-y-auto"
+            className="text-black-800 mb-0 border-t-2 text-justify px-3 py-1 leading-relaxed text-base md:text-lg max-h-80 md:max-h-[60vh] overflow-y-auto"
           >
             {storyParagraphs[currentPage - 1].split('\n').map((line, index) => (
               <React.Fragment key={index}>

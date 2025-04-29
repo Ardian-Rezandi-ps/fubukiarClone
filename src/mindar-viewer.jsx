@@ -103,15 +103,9 @@ export default function MindARViewer({collectionCount }) {
                             targetFound ? "border-transparent bg-green-500/20" : "border-gray bg-gray/20"
                         } tw-class font-playfair text-nowrap text-sm backdrop-blur-sm text-white absolute bottom-28 left-1/2 -translate-x-1/2 z-10 border px-8 py-4 rounded-xl flex gap-4 justify-center`}
                     >
-                        {targetFound ? "Target ditemukan" : "Arahkan kamera pada lukisan"}
+                        {targetFound ? "Target ditemukan" : "Arahkan kamera pada QR Code"}
                     </div>
-                    <Link
-                        to="/collection"
-                        className="tw-class text-white absolute bottom-10 left-1/2 -translate-x-1/2 z-10 bg-primary-darker px-8 py-2 rounded-xl flex gap-4 justify-center"
-                    >
-                        <img src={IconCollection} alt="Icon Collection" />
-                        <span className="font-playfair text-nowrap text-sm">Galeri | {collectionCount}</span>
-                    </Link>
+                   
                 </>
             )}
         </>

@@ -26,9 +26,8 @@ const Aboutcerita = () => {
 
     return (
         <div>
-            <BackIcon />
             <div className="relative w-full h-1/2 h-2/5">
-            <Carousel autoSlide animationType="fade" hideNavigation hidePagination>
+                <Carousel autoSlide animationType="fade" hideNavigation hidePagination>
                     {[
                         "/images/car1.png",
                         "/images/car2.png",
@@ -38,14 +37,14 @@ const Aboutcerita = () => {
                     ].map((s) => <img key={s} src={s} className="w-full h-1/2 flex-shrink-0 h-full object-cover" />)}
                 </Carousel>
                 <div className="absolute top-1 bg-gradient-to-t from-primary-darker w-full h-full z-10"></div>
-
+                <BackIcon className="absolute top-4 left-4 z-20" />
             </div>
 
-            <div className="text-primary-orange flex justify-center items-center flex-col gap-2 px-10 py-5">
+            <div id="isi" className="text-primary-orange flex justify-center items-center flex-col gap-2 px-10 py-5 -mt-14 relative z-20">
                <h1 className="text-xl font-bold pb-2">Cerita Rakyat</h1>
                
                 <div
-                    className="text-xs border-t-2 font-light text-center border-primary-orange py-5"
+                    className="text-lg border-t-2 font-light text-center border-primary-orange py-5"
                    
                 >
 

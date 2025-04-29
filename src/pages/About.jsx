@@ -43,7 +43,7 @@ const About = () => {
             <div className="text-primary-orange flex justify-center items-center flex-col gap-2 px-10 py-5">
                 <h1 className="text-xl font-bold pb-2">{selectedContent.title}</h1>
                 <div
-                    className="text-xs border-t-2 font-light text-center border-primary-orange py-5 tracking-wide leading-5 unreset"
+                    className="text-xl border-t-2 font-light text-center border-primary-orange py-5 tracking-wide leading-5 unreset"
                     dangerouslySetInnerHTML={{ __html: sanitizeDOM(selectedContent.description) }}
                 ></div>
             </div>

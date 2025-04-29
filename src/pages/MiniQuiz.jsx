@@ -314,7 +314,12 @@ const MiniQuiz = () => {
     return (
         <div className="min-h-screen bg-primary-darker">
             {/* Banner */}
-            <div className="relative w-full h-32 bg-primary-orange">
+            <div className="relative w-full h-32">
+                <img 
+                    src="/images/banner4.png" 
+                    alt="Banner" 
+                    className="w-full h-full object-cover"
+                />
                 <div className="absolute inset-0 flex flex-col items-center justify-center">
                     <h1 className="text-3xl font-bold text-white">Mini Quiz</h1>
                     <div className="mt-2 px-6 py-2 rounded-lg bg-orange-100">
@@ -383,7 +388,7 @@ const MiniQuiz = () => {
                     </div>
                 </div>
             ) : (
-                <div className="bg-white p-4 rounded-lg mb-6">
+                <div id="quiz-container" className="bg-white p-4 rounded-t-lg mb-2 -mt-2 relative z-10">
                     <div className="max-w-2xl mx-auto p-4">
                         {/* Gambar Utama */}
                         <div className="relative w-48 h-48 mx-auto mb-6 rounded-lg overflow-hidden">

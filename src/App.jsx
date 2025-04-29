@@ -40,6 +40,7 @@ import Joystix from "./pages/Joystix";
 import Aboutcerita from "./pages/Aboutcerita";
 import StoryDetail from "./pages/StoryDetail";
 import MiniQuiz from "./pages/MiniQuiz";
+import QRScanner from "./pages/QRScanner";
 
 function App() {
     const [isLandscape, setIsLandscape] = useState(false);
@@ -146,7 +147,7 @@ function App() {
                 <Route path="/dashboard/report/" element={<Report />} />
 
             </Route>
-            <Route path="/start" element={<StartAR />} />
+            <Route path="/start" element={<QRScanner />} />
         </Routes>
     );
 }
