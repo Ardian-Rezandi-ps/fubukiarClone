@@ -154,7 +154,7 @@ const StoryDetail = () => {
         )}
         <div className="w-full flex justify-center mt-1">
           <Link
-            to="/mini-quiz"
+            to={isLutung ? "/mini-quiz/lutung" : "/mini-quiz/empat-raja"}
             className="rounded-lg border-2 border-primary-orange bg-black text-primary-orange font-bold px-8 py-1.5 text-base shadow transition hover:bg-primary-orange hover:text-black"
           >
             Mulai Mini Quiz

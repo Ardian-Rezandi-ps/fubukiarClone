@@ -126,6 +126,7 @@ function App() {
                 <Route path="/Aboutcerita" element={<Aboutcerita />} />
                 <Route path="/story-detail/:cerita" element={<StoryDetail />} />
                 <Route path="/mini-quiz" element={<MiniQuiz />} />
+                <Route path="/mini-quiz/:quizType" element={<MiniQuiz />} />
             </Route>
             <Route element={<DashboardLayout />}>
                 <Route path="/dashboard" element={<Dashboard />} />

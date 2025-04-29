@@ -150,7 +150,7 @@ const MiniQuiz = () => {
     const empatRajaQuestions = [
         {
             id: 1,
-            image: '/images/story/Lutung13.webp',
+            image: '/images/story/EmpatRaja01.webp',
             question: 'Berapa telur yang ditemukan Raja dan Ratu di hutan?',
             options: [
                 'A. 4',
@@ -163,7 +163,7 @@ const MiniQuiz = () => {
         },
         {
             id: 2,
-            image: '/images/story/Lutung14.webp',
+            image: '/images/story/EmpatRaja02.webp',
             question: 'Berapa telur yang akhirnya menetas?',
             options: [
                 'A. 3',
@@ -176,7 +176,7 @@ const MiniQuiz = () => {
         },
         {
             id: 3,
-            image: '/images/story/Lutung15.webp',
+            image: '/images/story/EmpatRaja03.webp',
             question: 'Apa yang dilakukan keluarga setelah anak-anak tumbuh besar?',
             options: [
                 'A. Menikahkan mereka',
@@ -189,7 +189,7 @@ const MiniQuiz = () => {
         },
         {
             id: 4,
-            image: '/images/story/Lutung16.webp',
+            image: '/images/story/EmpatRaja04.webp',
             question: 'Siapa anak yang pandai bertani?',
             options: [
                 'A. Dohak',
@@ -202,7 +202,7 @@ const MiniQuiz = () => {
         },
         {
             id: 5,
-            image: '/images/story/Lutung17.webp',
+            image: '/images/story/EmpatRaja05.webp',
             question: 'Siapa anak yang berbakat dalam berburu?',
             options: [
                 'A. Betani',
@@ -215,7 +215,7 @@ const MiniQuiz = () => {
         },
         {
             id: 6,
-            image: '/images/story/Lutung18.webp',
+            image: '/images/story/EmpatRaja06.webp',
             question: 'Apa peran Dohak dalam keluarga?',
             options: [
                 'A. Menjaga rumah',
@@ -228,7 +228,7 @@ const MiniQuiz = () => {
         },
         {
             id: 7,
-            image: '/images/story/Lutung19.webp',
+            image: '/images/story/EmpatRaja07.webp',
             question: 'Siapa anak yang pandai membangun rumah?',
             options: [
                 'A. War',
@@ -241,7 +241,7 @@ const MiniQuiz = () => {
         },
         {
             id: 8,
-            image: '/images/story/Lutung19.webp',
+            image: '/images/story/EmpatRaja08.webp',
             question: 'Apa tugas Tintole dalam keluarga?',
             options: [
                 'A. Menjaga adik-adiknya',
@@ -254,7 +254,7 @@ const MiniQuiz = () => {
         },
         {
             id: 9,
-            image: '/images/story/Lutung19.webp',
+            image: '/images/story/EmpatRaja09.webp',
             question: 'Apa amanat terakhir sang ayah?',
             options: [
                 'A. Jangan pernah kembali ke desa',
@@ -267,7 +267,7 @@ const MiniQuiz = () => {
         },
         {
             id: 10,
-            image: '/images/story/Lutung19.webp',
+            image: '/images/story/EmpatRaja10.webp',
             question: 'Apa arti nama \'Raja Ampat\'?',
             options: [
                 'A. Pulau impian',
@@ -316,7 +316,7 @@ const MiniQuiz = () => {
             {/* Banner */}
             <div className="relative w-full h-32 bg-primary-orange">
                 <div className="absolute inset-0 flex flex-col items-center justify-center">
-                    <h1 className="text-3xl font-bold text-white">Mini Quiz</h1>
+                    <h1 className="text-3xl font-bold text-white">Mini Quiz {quizType === 'empat-raja' ? 'Empat Raja' : 'Lutung Kasarung'}</h1>
                     <div className="mt-2 px-6 py-2 rounded-lg bg-orange-100">
                         <span className="text-2xl font-bold text-orange-700">Skor: {score}</span>
                     </div>
