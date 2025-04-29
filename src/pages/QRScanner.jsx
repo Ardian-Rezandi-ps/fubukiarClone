@@ -89,32 +89,40 @@ const QRScanner = () => {
     requestRef.current = requestAnimationFrame(scanQRCode);
   };
 
+  // Fungsi untuk mematikan kamera
+  const stopCamera = () => {
+    if (videoRef.current && videoRef.current.srcObject) {
+      const tracks = videoRef.current.srcObject.getTracks();
+      tracks.forEach(track => track.stop());
+      videoRef.current.srcObject = null;
+    }
+    if (requestRef.current) {
+      cancelAnimationFrame(requestRef.current);
+    }
+  };
+
   // Handle QR code result
   const handleQRCodeResult = (data) => {
     try {
-      // Check if it's a URL
       let url;
       try {
         url = new URL(data);
       } catch {
-        // If it's not a valid URL, check if it's a relative path
         if (data.startsWith('/')) {
-          // It's a relative path, navigate within the app immediately
+          stopCamera(); // Matikan kamera sebelum navigate
           navigate(data);
           return;
         } else {
-          // Not a URL or path, just display the result
           setResult(data);
           return;
         }
       }
 
-      // If it's a URL within our app domain
       if (url.hostname === window.location.hostname) {
-        // Extract the path and navigate immediately
+        stopCamera(); // Matikan kamera sebelum navigate
         navigate(url.pathname + url.search);
       } else {
-        // External URL, open in the current tab
+        stopCamera(); // Matikan kamera sebelum redirect
         window.location.href = data;
       }
     } catch (err) {
@@ -131,6 +139,12 @@ const QRScanner = () => {
     requestRef.current = requestAnimationFrame(scanQRCode);
   };
 
+  // Update tombol back dan go back
+  const handleBack = () => {
+    stopCamera();
+    navigate(-1);
+  };
+
   return (
     <div className="min-h-screen bg-primary-darker flex flex-col">
       {/* Header */}
@@ -141,7 +155,7 @@ const QRScanner = () => {
           className="h-10"
         />
         <button 
-          onClick={() => navigate(-1)}
+          onClick={handleBack}
           className="absolute left-4 top-1/2 transform -translate-y-1/2"
         >
           <img 
@@ -182,7 +196,7 @@ const QRScanner = () => {
               Try Again
             </button>
             <button 
-              onClick={() => navigate(-1)}
+              onClick={handleBack}
               className="bg-gray-600 text-white px-6 py-2 rounded-lg font-semibold"
             >
               Go Back
