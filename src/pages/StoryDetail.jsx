@@ -80,16 +80,16 @@ const StoryDetail = () => {
   return (
     <div className="flex flex-col min-h-screen bg-gray-100 relative">
       {/* Header with Image */}
-      <div className="w-full h-72 relative overflow-hidden mt-8">
+      <div className="w-full h-72 relative overflow-hidden mt-0">
         {isImageLoading && (
           <div className="absolute inset-0 flex items-center justify-center bg-gray-200">
-            <p className="text-gray-600">memuat gambar...</p>
+            <p className="text-white-600">memuat gambar...</p>
           </div>
         )}
         <img 
           src={`/images/story/Lutung${imagePage.toString().padStart(2, '0')}.webp`} 
           alt={`Story Page ${currentPage}`} 
-          className="w-full h-full object-contain"
+          className="w-full h-full object-cover mt-0 mb-5"
           onLoad={handleImageLoad}
           onError={() => setIsImageLoading(false)}
         />
@@ -102,14 +102,14 @@ const StoryDetail = () => {
       </Link>
 
       {/* Story Content */}
-      <div id="storycontent" className="flex-1 px-5 py-4 bg-white rounded-t-3xl -mt-6 z-10 overflow-y-auto max-h-[calc(100vh-18rem)] shadow-lg">
+      <div id="storycontent" className="flex-1 px-5 py-4 bg-white rounded-t-3xl -mt-20 z-10 overflow-y-auto max-h-[calc(100vh-18rem)] shadow-lg">
         <div className="border-b border-gray-300 pb-4 mb-4">
-          <h3 id="judulstory" className="text-1xl font-bold text-black text-center mb-4">
-            {isLutung ? "Lutung Kasarung" : "Empat Raja"}
+          <h3 id="judulstory" className="text-1xl text-black text-center mb-4">
+           <i>Cerita Rakyat:</i> <b>{isLutung ? "Lutung Kasarung" : "Empat Raja"}</b> 
           </h3>
           <p
             ref={paragraphRef}
-            className="text-black-800 mb-4 border-t-2 text-justify px-3 py-1 leading-relaxed text-xs max-h-80 md:max-h-[60vh] overflow-y-auto"
+            className="text-black-800 mb-0 border-t-2 text-left px-3 py-1 leading-relaxed text-base md:text-lg max-h-80 md:max-h-[60vh] overflow-y-auto"
           >
             {storyParagraphs[currentPage - 1].split('\n').map((line, index) => (
               <React.Fragment key={index}>
