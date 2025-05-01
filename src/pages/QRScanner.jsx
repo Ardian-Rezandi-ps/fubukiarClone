@@ -104,6 +104,17 @@ const QRScanner = () => {
   // Handle QR code result
   const handleQRCodeResult = (data) => {
     try {
+      // Special routing for specific QR codes
+      if (data === "lutung") {
+        stopCamera(); // Matikan kamera sebelum navigate
+        navigate("/story-detail/lutung");
+        return;
+      } else if (data === "4raja") {
+        stopCamera(); // Matikan kamera sebelum navigate
+        navigate("/story-detail/empat-raja");
+        return;
+      }
+
       let url;
       try {
         url = new URL(data);

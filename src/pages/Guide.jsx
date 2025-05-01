@@ -24,11 +24,11 @@ const Guide = () => {
   
 
     const paragraphs = {
-        1: "Kumpulkan 14 item tersembunyi di dalam cerita interaktif ini. Gunakan petunjuk di setiap panel, lalu ikuti kuis seru untuk menguji pengetahuan Anda!",
-        2: "Ingin mengetahui lebih banyak tentang setiap cerita? Pindai gambar dengan kamera ponsel Anda untuk membuka informasi tambahan.",
-        3: "Tekan tombol “Kuis” untuk menjawab kuisnya. Dapatkan nilai lebih dari 100 untuk ditukar dengan hadiah dari indonesia Kaya. Semakin besar nilaimu, semakin menarik hadiahnya!",
-        4: "Cari item-item tersembunyi di setiap panel. Saat Anda menemukannya, item akan otomatis tersimpan dalam koleksi Anda.",
-        5: "Setelah mengumpulkan semua item tersembunyi, pastikan untuk memeriksa koleksi Anda untuk melihat semua temuan."
+        1: 'Tekan tombol “Mulai Jelajah Cerita” untuk mengaktifkan kamera. Arahkan ke gambar untuk mulai eksplorasi cerita interaktif!',
+        2: 'Temukan 2 QR code di awal cerita Lutung Kasarung dan Raja Ampat. Pindai untuk membaca cerita lengkap dan mulai petualanganmu!',
+        3: 'Tekan tombol “Kuis” untuk menjawab kuisnya. Dapatkan nilai lebih dari 100 untuk ditukar dengan hadiah dari indonesia Kaya. Semakin besar nilaimu, semakin menarik hadiahnya!',
+        4: 'Cari item-item tersembunyi di setiap panel. Saat Anda menemukannya, item akan otomatis tersimpan dalam koleksi Anda.',
+        5: 'Sekarang saatnya kamu menjelajahi cerita. Selamat menikmati pengalaman di dunia cerita rakyat Indonesia!'
        
     };
 
@@ -62,7 +62,13 @@ const Guide = () => {
                         </div>
                         <div className="bg-guide flex justify-start items-center flex-col gap-2 px-16 py-5 h-1/2">
                             <h1 id="carouseljudul" className="text-2xl font-bold">
-                                {`Petunjuk ${index}`}
+                                {index === 1 ? "Selamat Datang" : 
+                                 index === 2 ? "Petunjuk 1" : 
+                                  index === 3 ? "Petunjuk 2" : 
+                                  index === 4 ? "Petunjuk 3" : 
+                                  index === 5 ? "Ayo Jelajah" : 
+                                 `Petunjuk ${index}`}
+                                
                             </h1>
                             <hr className="border-t-4 border-gray-black w-full h-1" />
                             <div id="carouselparagraf" className="text-sm font-light text-center tracking-wide unreset max-w-md mx-auto">

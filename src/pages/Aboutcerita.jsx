@@ -44,8 +44,7 @@ const Aboutcerita = () => {
                <h1 className="text-xl font-bold pb-2">Cerita Rakyat</h1>
                
                 <div
-                    className="text-lg border-t-2 font-light text-center border-primary-orange py-5"
-                   
+                    className="text-lg border-t-2 font-light text-center border-primary-orange py-5 text-justify"
                 >
 
 Cerita rakyat adalah warisan lisan yang telah hidup dari generasi ke generasi—kisah yang mengandung nilai, harapan, dan identitas budaya bangsa. Di balik dongeng-dongeng sederhana, tersembunyi pesan tentang kebaikan, keberanian, dan kebijaksanaan yang membentuk cara kita melihat dunia.

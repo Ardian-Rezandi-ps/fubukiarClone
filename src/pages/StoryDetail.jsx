@@ -2,41 +2,109 @@ import React, { useState, useRef, useEffect } from 'react';
 import { Link, useParams } from 'react-router-dom';
 
 const lutungKasarung = [
-  `Di dalam istana yang megah, sang Raja duduk termenung.\nUsianya telah lanjut, tubuhnya melemah, dan satu pertanyaan terus mengganggu pikirannya:\nSiapa yang akan menggantikan takhta kerajaan?\nIa memiliki beberapa putri yang tumbuh dengan baik.\nMasing-masing punya kelebihan, tapi satu di antaranya memiliki hati yang paling lembut.\nNamun… membuat pilihan bukanlah hal mudah bagi seorang ayah dan raja.\n\n\n\n\n`,
-  `Pada suatu pagi yang cerah, sang Raja memanggil semua putrinya ke balairung istana.\nIa berdiri tegak, namun matanya menyimpan haru.\n"Ayah akan segera menyerahkan takhta," katanya.\n"Dan pewaris kerajaan ini adalah… Purbasari."\nPara kakak Purbasari tersenyum dan memberi selamat.\nMereka tahu adik bungsu mereka berhati baik.\nNamun, hanya satu yang tidak tersenyum—Purbararang.\nIa menunduk, matanya tajam… hatinya terbakar cemburu.\n\n\n\n\n`,
-  `Malam harinya, saat semua tertidur, Purbararang menyelinap keluar istana.\nDengan langkah cepat, ia menuju hutan terlarang… tempat tinggal seorang penyihir tua.\n"Aku ingin Purbasari terlihat buruk di mata ayah," bisiknya.\nSang penyihir mengangguk dan menyiapkan ramuan.\nCahaya hijau menyala dari tungku… mantra pun dilepaskan.`,
-  `Keesokan harinya, wajah dan tubuh Purbasari dipenuhi bercak gelap.\nIa merasa lemas, bingung, dan ketakutan.\nSang Raja memeluk putri bungsunya dengan mata berkaca-kaca.\n"Ayah tak tahu apa yang terjadi… tapi engkau terlihat seperti terkena kutukan," katanya.\nDari kejauhan, Purbararang pura-pura prihatin—padahal hatinya puas.`,
-  `Dengan berat hati, sang Raja mengambil keputusan.\nUntuk menjaga nama baik kerajaan, Purbasari harus diasingkan ke hutan.\nPurbasari tidak menangis. Ia hanya menunduk dan mencium tangan ayahnya.\n"Terima kasih, Ayah," katanya lirih.\nDengan langkah perlahan, ia meninggalkan istana.\nTanpa tahu, di hutan sana, takdir baru sedang menantinya.`,
-  `Di tengah hutan yang sunyi, Purbasari duduk menangis.\nAir matanya jatuh tanpa henti, rasa sedih dan putus asa menyelimuti hatinya.\nTiba-tiba, dari balik semak-semak, muncul seekor lutung hitam berbulu lebat.\nLutung itu berjalan pelan mendekati Purbasari, lalu duduk di dekatnya.\nIa tak bicara, hanya memandang lembut.\nDan di tengah kesedihan itu, sebuah pertemanan lahir tanpa kata.\n\n\n\n\n
+  `Di dalam istana yang megah, sang Raja duduk termenung. Usianya telah lanjut, tubuhnya melemah, dan satu pertanyaan terus 
+  mengganggu pikirannya:\n\n\n<i>Siapa yang akan menggantikan takhta kerajaan?</i>\n\n\nIa memiliki beberapa putri yang tumbuh dengan baik.\n
+  Masing-masing punya kelebihan, tapi satu di antaranya memiliki hati yang paling lembut.
+  \nNamun… membuat pilihan bukanlah hal mudah bagi seorang ayah dan raja.\n\n\n\n\n`,
+  `Pada suatu pagi yang cerah, sang Raja memanggil semua putrinya ke balairung istana.
+  Ia berdiri tegak, namun matanya menyimpan haru.\n
+  \n"Ayah akan segera menyerahkan takhta," katanya.\n
+  "Dan pewaris kerajaan ini adalah… Purbasari."\n\n\n
+  Para kakak Purbasari tersenyum dan memberi selamat.\n
+  Mereka tahu adik bungsu mereka berhati baik.\n
+  Namun, hanya satu yang tidak tersenyum—Purbararang.\n
+  Ia menunduk, matanya tajam… hatinya terbakar cemburu.\n\n\n\n\n`,
+  `Malam harinya, saat semua tertidur, Purbararang menyelinap keluar istana. Dengan langkah cepat, ia menuju hutan terlarang… 
+  tempat tinggal seorang penyihir tua.\n
+  "Aku ingin Purbasari terlihat buruk di mata ayah," bisiknya.\n
+  Sang penyihir mengangguk dan menyiapkan ramuan.\n
+  Cahaya hijau menyala dari tungku… \n
+  Mantra pun dilepaskan.`,
+  `Keesokan harinya, wajah dan tubuh Purbasari dipenuhi bercak gelap.
+  Ia merasa lemas, bingung, dan ketakutan.\n
+  Sang Raja memeluk putri bungsunya dengan mata berkaca-kaca.\n
+  "Ayah tak tahu apa yang terjadi… tapi engkau terlihat seperti terkena kutukan," katanya.\n
+  Dari kejauhan, Purbararang pura-pura prihatin—padahal hatinya puas.\n`,
+  `Dengan berat hati, sang Raja mengambil keputusan. Untuk menjaga nama baik kerajaan, Purbasari harus diasingkan ke hutan.\n
+  Purbasari tidak menangis. Ia hanya menunduk dan mencium tangan ayahnya.\n
+  "Terima kasih, Ayah," katanya lirih.\n
+  Dengan langkah perlahan, ia meninggalkan istana. Tanpa tahu, di hutan sana, takdir baru sedang menantinya.`,
+  `Di tengah hutan yang sunyi, Purbasari duduk menangis.\n
+  Air matanya jatuh tanpa henti, rasa sedih dan putus asa menyelimuti hatinya.\n
+  Tiba-tiba, dari balik semak-semak, muncul seekor lutung hitam berbulu lebat.\n
+ Lutung itu berjalan pelan mendekati Purbasari, lalu duduk di dekatnya.\n
+ Ia tak bicara, hanya memandang lembut.\n
+ Di tengah kesedihan itu, sebuah pertemanan lahir tanpa kata.\n\n\n\n\n
 `,
-  `Keesokan harinya, Lutung mengajak Purbasari menyusuri jalan setapak menuju air terjun suci.
-Di sana, di bawah gemuruh air yang jatuh, Lutung Kasarung berdoa dalam diam.
-Ia memejamkan mata, duduk bersila, dan membisikkan harapan untuk kesembuhan Purbasari.
-Purbasari memperhatikannya dari belakang.
-Ia tak tahu apa yang sedang Lutung lakukan,
+  `Keesokan harinya, Lutung mengajak Purbasari menyusuri jalan setapak menuju air terjun suci.\n
+Di sana, di bawah gemuruh air yang jatuh, Lutung Kasarung berdoa dalam diam.\n
+Ia memejamkan mata, duduk bersila, dan membisikkan harapan untuk kesembuhan Purbasari.\n
+Purbasari memperhatikannya dari belakang.\n
+Ia tak tahu apa yang sedang Lutung lakukan,\n
 tapi hatinya terasa lebih tenang dari sebelumnya.\n\n\n\n\n
 `,
-  `Hari demi hari berlalu. Perlahan, wajah Purbasari mulai bersinar kembali.
-Bercak di kulitnya menghilang, dan senyumnya tumbuh kembali.
-Ia dan Lutung bermain di hutan, dikelilingi hewan-hewan yang ramah—rusa, burung, dan kelinci.
-Tawa mereka terdengar lembut di antara pepohonan.
+  `Hari demi hari berlalu. Perlahan, wajah Purbasari mulai bersinar kembali.\n
+Bercak di kulitnya menghilang, dan senyumnya tumbuh kembali.\n
+Ia dan Lutung bermain di hutan, dikelilingi hewan-hewan yang ramah—rusa, burung, dan kelinci.\n
+Tawa mereka terdengar lembut di antara pepohonan.\n
 Untuk pertama kalinya, Purbasari merasa damai… dan tidak sendiri.\n\n\n\n\n
 `,
-  `Di kejauhan, kereta kerajaan tampak datang menembus hutan.\nRoda kayunya bergerak pelan, seolah membawa harapan.\nPurbasari dan Lutung berhenti bermain.\nMereka saling menatap. Tak ada kata-kata, tapi keduanya tahu:\ninilah saatnya kembali.\nPerjalanan menuju istana akan segera dimulai—dan lembaran baru pun terbuka.\n\n\n\n\n
-`,  `Setelah kembali ke istana, Purbasari disambut hangat oleh sang Raja, tapi tidak oleh semua orang.\nPurbararang, kakaknya, merasa tak terima.\n"Kalau memang kau pantas jadi ratu, buktikan lewat sayembara!" tantangnya.\nMaka diumumkan tiga lomba:\nMemasak,\nMenata rambut,\nMemperkenalkan pasangan terbaik.\nRakyat berkumpul untuk menyaksikan.\nPurbararang tampil percaya diri—sementara Purbasari tetap tenang.\n\n\n\n\n
-`,  `Dalam lomba memasak, Purbararang menyajikan hidangan mewah,\ntapi rasa masakan Purbasari yang sederhana justru menghangatkan hati semua orang.\nDalam lomba rambut, hiasan dan sisir emas kalah dari kilau alami rambut Purbasari.\nLomba terakhir membuat semua terdiam:\nPurbararang menggandeng pangeran tampan,\nsementara Purbasari menunjuk… seekor lutung.\n"Ini sahabatku," katanya lembut.\nOrang-orang tertawa—tapi tidak lama.\nLutung Kasarung berubah menjadi Pangeran Guru Minda.\nWibawanya memukau semua yang hadir.\nKini tak ada lagi keraguan—Purbasari menang, dalam semua hal yang berarti.\n\n\n\n\n
-`,  `Purbasari dan Guru Minda berdiri berdampingan di pelaminan istana.\nTak ada lagi kutukan, tak ada lagi cemburu—hanya cinta dan kedamaian.\nBunga-bunga mekar, rakyat bersorak, dan musik mengalun lembut di seluruh penjuru istana.\nSang Raja tersenyum bangga, menyaksikan putri bungsunya menikah dengan orang yang dipilih oleh hatinya sendiri.\nMereka tidak memerintah dengan kekuatan,\ntapi dengan kelembutan, kasih, dan kejujuran.\nRakyat hidup sejahtera. Istana dipenuhi tawa.\nDan kisah mereka dikenang…\nsebagai bukti bahwa kebaikan akan selalu pulang sebagai pemenang.\n\n\n\n\n
+  `Di kejauhan, kereta kerajaan tampak datang menembus hutan.Roda kayunya bergerak pelan, seolah membawa harapan.
+  Purbasari dan Lutung berhenti bermain.\nMereka saling menatap. Tak ada kata-kata, tapi keduanya tahu:\n
+  inilah saatnya kembali.\n
+   Perjalanan menuju istana akan segera dimulai—dan lembaran baru pun terbuka.\n\n\n\n\n
+`,  `Setelah kembali ke istana, Purbasari disambut hangat oleh sang Raja, tapi tidak oleh semua orang.\n
+Purbararang, kakaknya, merasa tak terima.\n
+"Kalau memang kau pantas jadi ratu, buktikan lewat sayembara!" tantangnya.\n\n
+Maka diumumkan tiga sayembara:
+Memasak,
+Menata rambut,
+Memperkenalkan pasangan terbaik.\n
+Rakyat berkumpul untuk menyaksikan.\n
+Purbararang tampil percaya diri—sementara Purbasari tetap tenang.\n\n\n\n\n
+`,  `Dalam sayembara memasak, Purbararang menyajikan hidangan mewah, tapi rasa masakan Purbasari yang sederhana justru menghangatkan hati semua orang.\n
+ Dalam sayembara menata rambut, hiasan dan sisir emas kalah dari kilau alami rambut Purbasari.\n
+ sayembara terakhir membuat semua terdiam: Purbararang menggandeng pangeran tampan,\n
+ sementara Purbasari menunjuk… seekor lutung.\n
+ "Ini sahabatku," katanya lembut.\n
+ Orang-orang tertawa, tapi tidak lama.
+  \nLutung Kasarung berubah menjadi Pangeran Guru Minda. Wibawanya memukau semua yang hadir.Kini tak ada lagi keraguan—Purbasari menang, dalam semua hal yang berarti.\n\n\n\n\n
+`,  `Purbasari dan Guru Minda berdiri berdampingan di pelaminan istana.\n
+Tak ada lagi kutukan, tak ada lagi cemburu—hanya cinta dan kedamaian. Bunga-bunga mekar, rakyat bersorak, dan musik mengalun lembut di seluruh penjuru istana.\n
+ Sang Raja tersenyum bangga, menyaksikan putri bungsunya menikah dengan orang yang dipilih oleh hatinya sendiri.\n
+Mereka tidak memerintah dengan kekuatan,tapi dengan kelembutan, kasih, dan kejujuran.Rakyat hidup sejahtera. Istana dipenuhi tawa.\n
+Dan kisah mereka dikenang…\nsebagai bukti bahwa kebaikan akan selalu pulang sebagai pemenang.\n\n\n\n\n
 `
 ];
 
 const empatRaja = [
-  `Di sebuah desa kecil yang damai,\nhidup sepasang suami istri—raja dan ratu yang bijaksana.\nHidup mereka penuh kasih,\ntapi satu hal masih belum mereka miliki:\nseorang anak.\nSetiap hari mereka berdoa, berharap, menanti.\nHingga suatu pagi, mereka pergi ke hutan untuk mencari kayu.\nNamun yang mereka temukan bukanlah kayu,\nmelainkan enam telur misterius, bercahaya lembut di balik semak-semak.\nMereka saling menatap,\ndan membawa telur-telur itu pulang…\ndengan hati penuh harapan.\n\n\n\n\n
-`,  `Beberapa waktu setelah dibawa pulang,\nlima dari enam telur perlahan mulai retak.\nDari dalamnya, lahir empat bayi laki-laki dan satu perempuan.\nMereka sehat, hangat, dan tak bersuara—seolah tahu mereka ditunggu begitu lama.\nSang Raja dan Ratu menangis bahagia.\nSatu telur yang tersisa tetap utuh…\ndan disimpan sebagai tanda, bahwa keajaiban belum selesai.
-`,  `Tahun-tahun berlalu dengan cepat.\nKelima anak itu tumbuh dalam cinta dan kebersamaan.\nDi malam hari, mereka menari di bawah cahaya bulan.\nMusik dan tawa terdengar di halaman rumah kecil mereka.\nHidup mereka sederhana,\ntapi tak pernah kekurangan rasa syukur.
-`,  `Setiap anak menunjukkan bakatnya sendiri:\n🌱 War, si sulung, rajin merawat ladang—menggali tanah dan menanam sayuran.\n🏹 Betani, cekatan dan gesit—berlatih memanah dan membantu berburu makanan.\n🐐 Dohak, tenang dan tangguh—menggembala kambing dan menjaga ternak keluarga.\n🏗️ Mohamad, teliti dan kreatif—menenun atap dan membantu membangun rumah.\n❤️ Tintole, si bungsu, lembut dan penuh perhatian—selalu ada untuk ibu dan saudara-saudaranya.\nMereka berbeda,\ntapi selalu saling melengkapi.\n\n\n\n\n
-`,  `Saat anak-anak telah cukup besar,\nsang ayah memanggil keempat putranya ke halaman rumah.\nIa membentangkan peta berisi pulau-pulau di lautan timur.\n"Ini semua akan menjadi milik kalian," katanya.\n"Tapi ingat… kekuasaan bukan untuk diri sendiri—tapi untuk melindungi sesama."\n\n\n\n\n
-`,  `Tak lama setelah itu, sang Raja jatuh sakit.\nSeluruh keluarga berkumpul di samping tempat tidurnya.\nDengan suara lemah, ia menatap satu per satu anak-anaknya.\n"Jangan lupakan asal kalian," ucapnya pelan.\nKetika ia berpulang,\nangin terasa hening… dan langit malam tampak lebih gelap dari biasanya.\n\n\n\n\n
-`,  `War, Betani, Dohak, dan Mohamad berlayar ke pulau mereka masing-masing.\nDi sana, mereka membangun, menjaga, dan memimpin dengan hati.\nRakyat mencintai mereka.\nPulau-pulau itu pun tumbuh damai di bawah perlindungan mereka.\nMerekalah yang dikenal sebagai Raja Ampat—\nempat saudara, empat pemimpin, satu warisan dari hutan dan langit.\nSementara itu, Tintole tetap tinggal bersama ibunya,\nmenjaga rumah kecil yang menyimpan awal dari segalanya.\n\n\n\n\n
+  `Di sebuah desa kecil yang damai, hidup sepasang raja dan ratu yang bijaksana. Hidup mereka penuh kasih, tapi satu hal masih belum mereka miliki, seorang anak.\n
+  Setiap hari mereka berdoa, berharap, menanti. Hingga suatu pagi, mereka pergi ke hutan untuk mencari kayu.\n
+  Namun yang mereka temukan bukanlah kayu, melainkan enam telur misterius, bercahaya lembut di balik semak-semak.\n\n\n\n\n
+`,  `Beberapa waktu setelah dibawa pulang, lima dari enam telur perlahan mulai retak.\n
+Dari dalamnya, lahir empat bayi laki-laki dan satu perempuan yang sehat, pintar dan lucu, mengisi hati sang raja dan ratu.\n
+Satu telur yang tersisa utuh tetap disimpan sebagai tanda, bahwa keajaiban belum selesai.\n\n
+`,  `Tahun-tahun berlalu dengan cepat.\n
+Di bawah asuhan raja dan ratu, kelima anak itu tumbuh besar dalam cinta dan kebahagiaan.\n
+Tiap hari di penuhi dengan tarian dan tawa bersama keluarga.\n\n
+`,  `Setiap anak menunjukkan bakatnya sendiri:\n
+🌱 War, si sulung, rajin merawat ladang, menggali tanah dan menanam sayuran.\n
+🏹 Betani, cekatan dan gesit, berlatih memanah dan membantu berburu makanan.\n
+🐐 Dohak, tenang dan tangguh,menggembala kambing dan menjaga ternak keluarga.\n
+🏗️ Mohamad, teliti dan kreatif, menenun atap dan membantu membangun rumah.\n
+❤️ Tintole, si bungsu, lembut dan penuh perhatian, selalu ada untuk ibu dan saudara-saudaranya.\n
+Mereka berbeda, tapi selalu saling melengkapi.\n\n\n\n\n
+`,  `Saat anak-anak telah cukup besar,sang ayah memanggil keempat putranya ke halaman rumah. Ia membentangkan peta berisi pulau-pulau di lautan timur.\n
+"Ini semua akan menjadi milik kalian," katanya.\n
+"Tapi ingat… kekuasaan bukan untuk diri sendiri, tapi untuk melindungi sesama."\n\n\n\n\n
+`,  `Tak lama setelah itu, sang Raja jatuh sakit.\n
+Seluruh keluarga berkumpul di samping tempat tidurnya. Dengan suara lemah, ia menatap satu per satu anak-anaknya.\n
+"Jangan lupakan asal kalian," ucapnya pelan.\n
+Ketika ia berpulang, angin terasa hening… dan langit malam tampak lebih gelap dari biasanya.\n\n\n\n\n
+`,  `War, Betani, Dohak, dan Mohamad berlayar ke pulau mereka masing-masing.\n
+Di sana, mereka membangun, menjaga, dan memimpin dengan hati. Rakyat mencintai mereka. Pulau-pulau itu pun tumbuh damai di bawah perlindungan mereka.\n
+Bijaksana dan cakap dalam memimpin nama mereka tersohor dengan sebutan Raja Ampat.\n
+Empat saudara, empat pemimpin, satu warisan dari hutan dan langit.\n\n\n\n\n
 `
 ];
 
@@ -104,16 +172,18 @@ const StoryDetail = () => {
       {/* Story Content */}
       <div id="storycontent" className="flex-1 px-5 py-4 bg-white rounded-t-3xl -mt-20 z-10 overflow-y-auto max-h-[calc(100vh-18rem)] shadow-lg">
         <div className="border-b border-gray-300 pb-4 mb-4">
-          <h3 id="judulstory" className="text-1xl text-black text-center mb-4">
+          <h3 id="judulstory" className="text-1xl text-black text-left mb-4">
            <i>Cerita Rakyat:</i> <b>{isLutung ? "Lutung Kasarung" : "Empat Raja"}</b> 
           </h3>
           <p
             ref={paragraphRef}
-            className="text-black-800 mb-0 border-t-2 text-justify px-3 py-1 leading-relaxed text-base md:text-lg max-h-80 md:max-h-[60vh] overflow-y-auto"
+            className="text-black-800 mb-0 border-t-2 text-left px-3 py-1 leading-relaxed text-base md:text-lg max-h-80 md:max-h-[60vh] overflow-y-auto"
           >
             {storyParagraphs[currentPage - 1].split('\n').map((line, index) => (
               <React.Fragment key={index}>
-                {line}
+                {line.split(/<i>|<\/i>/g).map((segment, i) => 
+                  i % 2 === 1 ? <i key={i}>{segment}</i> : segment
+                )}
                 <br />
               </React.Fragment>
             ))}

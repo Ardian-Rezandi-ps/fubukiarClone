@@ -1,9 +1,12 @@
 import React, { useState } from 'react';
+import { useAuth } from "../context/AuthProvider";
 import { useNavigate } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
-
+import { getSelectedUserPoints, updateUserPoints } from "../lib/firebase/users"; // Tambahkan updateUserPoints
 const MiniQuiz = () => {
+    const { user, logoutUser } = useAuth();
     const navigate = useNavigate();
+    const [countFromTotal, setCountFromTotal] = React.useState("");
     const { quizType } = useParams(); // Get the quiz type from URL parameter
     const [currentQuestion, setCurrentQuestion] = useState(0);
     const [selectedAnswer, setSelectedAnswer] = useState(null);
@@ -11,6 +14,7 @@ const MiniQuiz = () => {
     const [score, setScore] = useState(0);
     const [isQuizFinished, setIsQuizFinished] = useState(false);
     const [showOverlay, setShowOverlay] = useState(false);
+    const [canClaim, setCanClaim] = React.useState(false);
 
     // Lutung quiz questions
     const lutungQuestions = [
@@ -288,7 +292,7 @@ const MiniQuiz = () => {
         setShowResult(true);
         setShowOverlay(true);
         if (answer === questions[currentQuestion].correctAnswer) {
-            setScore(score + 100);
+            setScore(score + 10);
         }
     };
 
@@ -299,10 +303,19 @@ const MiniQuiz = () => {
             setSelectedAnswer(null);
             setShowResult(false);
         } else {
-            setIsQuizFinished(true);
+           
+            handleFinishQuiz();
+
         }
     };
-
+    const handleFinishQuiz = async () => {
+        setIsQuizFinished(true);
+       // if (!hasEarnedPoints) {
+            const userId = user.id; // Ganti dengan ID pengguna yang sesuai
+            await updateUserPoints(userId, score); // Panggil fungsi untuk memperbarui poin
+          //  setHasEarnedPoints(true); // Tandai bahwa poin sudah ditambahkan
+       // }
+    };
     const handleRestartQuiz = () => {
         setCurrentQuestion(0);
         setSelectedAnswer(null);

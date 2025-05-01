@@ -203,3 +203,31 @@ export const searchUserByEmail = async (email) => {
         return null;
     }
 };
+
+export const updateUserPoints = async (userId, pointsToAdd) => {
+    const userRef = ref(database, `Users/${userId}/quiz`);
+    const userProfilePointRef = ref(database, `Users/${userId}/points`);
+
+    const userQuizSnapshot = await get(userRef);
+    const userProfilePointSnapshot = await get(userProfilePointRef);
+
+    let totalPoint = 0;
+
+    if (userQuizSnapshot.exists()) {
+        const userQuiz = userQuizSnapshot.val();
+        totalPoint = Object.values(userQuiz).reduce((acc, curr) => acc + curr, 0);
+    }
+
+    // Update total point
+    const newTotalPoint = totalPoint + pointsToAdd;
+
+    // Simpan kembali ke database
+    await set(userRef, {
+        ...userQuizSnapshot.val(),
+        totalPoint: newTotalPoint, // Update totalPoint
+    });
+
+    // Update poin di profile
+    const currentProfilePoints = userProfilePointSnapshot.exists() ? userProfilePointSnapshot.val() : 0;
+    await set(userProfilePointRef, currentProfilePoints + pointsToAdd);
+};
