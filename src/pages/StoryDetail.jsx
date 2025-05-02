@@ -88,11 +88,11 @@ Satu telur yang tersisa utuh tetap disimpan sebagai tanda, bahwa keajaiban belum
 Di bawah asuhan raja dan ratu, kelima anak itu tumbuh besar dalam cinta dan kebahagiaan.\n
 Tiap hari di penuhi dengan tarian dan tawa bersama keluarga.\n\n
 `,  `Setiap anak menunjukkan bakatnya sendiri:\n
-🌱 War, si sulung, rajin merawat ladang, menggali tanah dan menanam sayuran.\n
-🏹 Betani, cekatan dan gesit, berlatih memanah dan membantu berburu makanan.\n
-🐐 Dohak, tenang dan tangguh,menggembala kambing dan menjaga ternak keluarga.\n
-🏗️ Mohamad, teliti dan kreatif, menenun atap dan membantu membangun rumah.\n
-❤️ Tintole, si bungsu, lembut dan penuh perhatian, selalu ada untuk ibu dan saudara-saudaranya.\n
+War, si sulung, rajin merawat ladang, menggali tanah dan menanam sayuran.\n
+Betani, cekatan dan gesit, berlatih memanah dan membantu berburu makanan.\n
+Dohak, tenang dan tangguh,menggembala kambing dan menjaga ternak keluarga.\n
+Mohamad, teliti dan kreatif, menenun atap dan membantu membangun rumah.\n
+Tintole, si bungsu, lembut dan penuh perhatian, selalu ada untuk ibu dan saudara-saudaranya.\n
 Mereka berbeda, tapi selalu saling melengkapi.\n\n\n\n\n
 `,  `Saat anak-anak telah cukup besar,sang ayah memanggil keempat putranya ke halaman rumah. Ia membentangkan peta berisi pulau-pulau di lautan timur.\n
 "Ini semua akan menjadi milik kalian," katanya.\n
