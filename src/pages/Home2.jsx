@@ -69,7 +69,7 @@ const Home2 = () => {
         navigate('/joystix');
     };
     const handleHome = () => {
-        navigate('/');
+        navigate('/story-detail/empat-raja');
     };
     if (isLoading) {
         return <LoadingScreen />;

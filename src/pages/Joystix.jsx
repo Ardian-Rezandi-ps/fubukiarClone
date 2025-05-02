@@ -10,8 +10,10 @@ import { Joystick } from 'react-joystick-component';
 import { updatemove, getIsEvent, getNamaEvent,getKoleksi,KoleksitoFalse, updatepersecond 
     ,onlineGender, KoleksiHitung, getJumlahkol,getLastItem,getGrupItem} from "../lib/firebase/movexy";
 import { chat } from "../lib/firebase/movexy";
-
+import { getSelectedUserPoints, updateUserPoints } from "../lib/firebase/users";
+import { useAuth } from "../context/AuthProvider";
 const Joystix = () => {
+    const { user, logoutUser } = useAuth();
     const [isLoading, setIsLoading] = React.useState(true);
     const [selectedContent, setSelectedContent] = React.useState(null);
     const [readygame, setReadyGame] = React.useState(null);
@@ -24,7 +26,7 @@ const Joystix = () => {
     const [isEventActive, setIsEventActive] = useState(false);
     const [currentEvent, setCurrentEvent] = useState("");
     const [Koleksi, setCurrentKoleksi] = useState("");
-    
+   // const [score, setScore] = useState(0);
     const [dialogImage, setDialogImage] = useState("/images/Totem.png");
     const [collectionCount, setCollectionCount] = useState(0);
     const [showOkButton, setShowOkButton] = useState(false);
@@ -32,6 +34,7 @@ const Joystix = () => {
     const [lastItemGet, setLastItemGet] = useState("");
     const [grupItemGet, setGrupItem] = useState(1);
     const [showStory, setShowStory] = React.useState(false);
+    const [isCompleteCollection, setIsCompleteCollection] = useState(false);
   // const [lastItemArray,setLastArray] = useState(null);
     const params = useParams();
     const tag = params.tag;
@@ -192,8 +195,11 @@ Suatu pagi, mereka memutuskan pergi ke hutan untuk mencari kayu bakar…<br></br
     const handleGenderSelect = (selectedGender) => {
         setGender(selectedGender);
         setShowIntroStory(true);
+        setIsCompleteCollection(false);
+
     };
     const handleReadyGame= () => {
+        setIsCompleteCollection(false);
         setReadyGame(true);
         onlineGender(gender, true);
         setIsEventActive(true);
@@ -414,15 +420,30 @@ Suatu pagi, mereka memutuskan pergi ke hutan untuk mencari kayu bakar…<br></br
         </div>
         );
     }
-    let iscompleted=false;
-    if (collectionCount >= 7 && !iscompleted) {
-        // Mengatur moveX dan moveY joystick ke 0
-        iscompleted = true;
-       updatemove(0, 0, gender); // Menambahkan ini untuk menghentikan gerakan joystick
+    //const [iscompleted, setCompletefin] = React.useState(false);
+    const handleFinishSkor = async () => {
+       
+       // if (!hasEarnedPoints) {
+            const userId = user.id; // Ganti dengan ID pengguna yang sesuai
+            await updateUserPoints(userId, 100); // Panggil fungsi untuk memperbarui poin
+          //  setHasEarnedPoints(true); // Tandai bahwa poin sudah ditambahkan
+       // }
+    };
+    if (collectionCount >= 7 && !isCompleteCollection){
+       
+        handleFinishSkor();
+        updatemove(0, 0, gender);
+        setIsCompleteCollection(true);
+   
+    }
+    if (isCompleteCollection){
+        //setIsCompleteCollection(true);
+        
+      
         
         return (
             <div id="selamatx" className="flex flex-col items-center h-screen bg-primary-darker text-white">
-                     <div id="bannertop" className="fixed top-0 left-0 w-full z-10">
+                <div id="bannertop" className="fixed top-0 left-0 w-full z-10">
                     <div className="relative">
                         <button 
                             onClick={() => handleBackmenu()}
@@ -456,7 +477,7 @@ Suatu pagi, mereka memutuskan pergi ke hutan untuk mencari kayu bakar…<br></br
                     <b>—ini adalah jawaban dari doa mereka.</b>
                 </p>
                 <button id="finishedgamebutton"
-                    onClick={() => navigate('/story-detail/empat-raja')} // Mengubah rute
+                    onClick={() => navigate('/story-detail/empat-raja')}
                     className="mt-6 bg-primary-orange text-white px-4 py-2 rounded-lg justify-center"
                 >
                     Kembali
@@ -465,7 +486,7 @@ Suatu pagi, mereka memutuskan pergi ke hutan untuk mencari kayu bakar…<br></br
             </div>
         );
     }
-
+  
     return (
         <div>
                        <div id="bannertop" className="fixed top-0 left-0 w-full z-10">
@@ -597,5 +618,6 @@ Suatu pagi, mereka memutuskan pergi ke hutan untuk mencari kayu bakar…<br></br
         </div>
     );
 };
+
 
 export default Joystix;
