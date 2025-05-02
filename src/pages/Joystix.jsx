@@ -89,6 +89,19 @@ Suatu pagi, mereka memutuskan pergi ke hutan untuk mencari kayu bakar…<br></br
         return () => clearInterval(interval);
     }, [gender]);
 
+    useEffect(() => {
+        const handleVisibilityChange = () => {
+            if (document.hidden) {
+                updatemove(0, 0, gender); // Mengatur moveX dan moveY ke 0 saat tab tidak aktif
+            }
+        };
+
+        document.addEventListener("visibilitychange", handleVisibilityChange);
+
+        return () => {
+            document.removeEventListener("visibilitychange", handleVisibilityChange);
+        };
+    }, [gender]);
     const handleStop = async (event) => {
         await updatemove(0, 0,gender);
     }
@@ -401,11 +414,15 @@ Suatu pagi, mereka memutuskan pergi ke hutan untuk mencari kayu bakar…<br></br
         </div>
         );
     }
-
-    if (collectionCount >= 7) {
+    let iscompleted=false;
+    if (collectionCount >= 7 && !iscompleted) {
+        // Mengatur moveX dan moveY joystick ke 0
+        iscompleted = true;
+       updatemove(0, 0, gender); // Menambahkan ini untuk menghentikan gerakan joystick
+        
         return (
             <div id="selamatx" className="flex flex-col items-center h-screen bg-primary-darker text-white">
-                <div id="bannertop" className="fixed top-0 left-0 w-full z-10">
+                     <div id="bannertop" className="fixed top-0 left-0 w-full z-10">
                     <div className="relative">
                         <button 
                             onClick={() => handleBackmenu()}
@@ -438,8 +455,8 @@ Suatu pagi, mereka memutuskan pergi ke hutan untuk mencari kayu bakar…<br></br
                     Mereka tak tahu dari mana asalnya,tapi mereka yakin..<br></br>
                     <b>—ini adalah jawaban dari doa mereka.</b>
                 </p>
-                <button 
-                    onClick={() => handleBackmenu()}
+                <button id="finishedgamebutton"
+                    onClick={() => navigate('/story-detail/empat-raja')} // Mengubah rute
                     className="mt-6 bg-primary-orange text-white px-4 py-2 rounded-lg justify-center"
                 >
                     Kembali
@@ -451,12 +468,33 @@ Suatu pagi, mereka memutuskan pergi ke hutan untuk mencari kayu bakar…<br></br
 
     return (
         <div>
-            <button 
-                onClick={handleLogout}
-                style={{ position: 'absolute', top: '10px', left: '10px', backgroundColor: 'white', padding: '10px', borderRadius: '5px' }}
-            >
-                Logout
-            </button>
+                       <div id="bannertop" className="fixed top-0 left-0 w-full z-10">
+                <div className="relative">
+                    <button 
+                        onClick={() => navigate('/story-detail/empat-raja')}
+                        className="absolute top-4 left-4 z-20 w-10 h-10"
+                    >
+                        <img 
+                            src="/images/back.png" 
+                            alt="Back" 
+                            className="w-full h-full object-contain"
+                        />
+                    </button>
+                    <img 
+                        src="/images/banner4.png" 
+                        alt="Banner" 
+                        className="w-full h-[25vh] object-cover"
+                    />
+                    <div id="isibaner" className="absolute inset-0 flex flex-col items-center justify-center">
+                        <h1 className="text-3xl font-bold text-white mb-2">Jejak Telur Ajaib</h1>
+                        <div id="ketkoleksi" className="px-4 py-2 rounded-lg text-xl font-bold text-white">
+                           Koleksi: {collectionCount}/7
+                         </div>
+                    </div>
+                   
+                </div>
+            </div>
+           
             
     
             {showDialog && (
@@ -512,13 +550,13 @@ Suatu pagi, mereka memutuskan pergi ke hutan untuk mencari kayu bakar…<br></br
                     </div>
                 </div>
             )}
-              <div id="questdesc" style={{ position: 'absolute', top: '20%', left: '50%', transform: 'translateX(-50%)', color: 'yellow', fontSize: '24px' }}>
-                    <h1 className="text-3xl font-bold mb-4 justify-center text-white">Quest Items:</h1>
-                    <div id="isiItem" style={{ width: '100%', textAlign: 'left', fontSize:'14px' }}>
+                       <div id="questdesc" style={{ position: 'absolute', top: '37%', left: '50%', transform: 'translateX(-50%)', color: 'yellow', fontSize: '24px' }}>
+                <h1 className="text-3xl font-bold mb-4 justify-center text-white">Quest Items:</h1>
+                <div id="isiItem" style={{ width: '100%', textAlign: 'left', fontSize:'14px' }}>
                     {renderQuestItems()}
-                    </div>
                 </div>
-            <div id="chatzone" style={{ position: 'absolute', top: '10%', left: '50%', transform: 'translateX(-50%)', width: '200px' }}>
+            </div>
+            <div id="chatzone" style={{ position: 'absolute', top: '30%', left: '50%', transform: 'translateX(-50%)', width: '200px' }}>
                 <button 
                     onClick={() => setShowChatGrid(!showChatGrid)}
                     className="bg-primary-orange text-white px-4 py-2 rounded font-bold w-full text-sm"
@@ -542,16 +580,14 @@ Suatu pagi, mereka memutuskan pergi ke hutan untuk mencari kayu bakar…<br></br
                     </div>
                 )}
             </div>
+            
            
 
                 
             
             <div id="joysticon" style={{ position: 'absolute', bottom: 15, left: '50%', transform: 'translateX(-50%)', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '20px' }}>
               
-               
-                <div id="ketkoleksi" className="px-4 py-2 rounded-lg text-xl font-bold text-white">
-                    Koleksi: {collectionCount}/7
-                </div>
+              
                
             
              

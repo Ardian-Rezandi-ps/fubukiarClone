@@ -102,10 +102,12 @@ Suatu pagi, mereka memutuskan pergi ke hutan untuk mencari kayu bakar…<br></br
 
     return (
         <div className="h-screen w-full flex flex-col items-center bg-primary-darker">
-            <button 
+            <button id="homebutton"
                         onClick={() => handleHome()}
-                        className="absolute top-4 left-4 z-10 w-10 h-10"
-                    ></button>
+                        className="absolute top-4 left-4 z-30 w-10 h-10"
+                    >
+                         <img src="/images/back.png" alt="Back" className="w-full h-full object-contain" />
+                    </button>
             <img 
                 src="/images/banner4.png" 
                 alt="Banner" 
