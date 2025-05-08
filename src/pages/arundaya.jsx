@@ -265,7 +265,7 @@ Jejakmu kini ada di Arundaya—negeri yang tumbuh dari kebaikan, cinta, dan hara
                                </button>
                                
                                {/* Label nama karakter */}
-                               <span className="bg-orange-500 text-white px-6 py-2 rounded mx-2 text-lg"> {/* Tambahkan text-lg untuk memperbesar ukuran font */}
+                               <span className="bg-orange-500 text-white px-6 py-2 rounded mx-2 text-lg w-32 text-center"> {/* Lebar tetap */}
                                    {getCharacterName(selectedCharacter)} {/* Panggil fungsi untuk mendapatkan nama karakter */}
                                </span>
 
@@ -279,8 +279,12 @@ Jejakmu kini ada di Arundaya—negeri yang tumbuh dari kebaikan, cinta, dan hara
                                    &lt; {/* Tombol kiri */}
                                </button>
                                
-                               {/* Label nama baju */}
-                               <span className="bg-orange-500 text-white px-6 py-2 rounded mx-2 text-lg">
+                               {/* Label nama baju dengan warna berdasarkan indeks */}
+                               <span className={`px-6 py-2 rounded mx-2 text-lg w-32 text-white text-center ${selectedOutfit === 0 ? 'bg-orange-500' : 
+                                   selectedOutfit === 1 ? 'bg-red-500' : 
+                                   selectedOutfit === 2 ? 'bg-purple-500' : 
+                                   selectedOutfit === 3 ? 'bg-green-500' : 
+                                   selectedOutfit === 4 ? 'bg-blue-500' : 'bg-gray-500'}`}>
                                    {getbajuName(selectedOutfit)} {/* Panggil fungsi untuk mendapatkan nama baju */}
                                </span>
 
