@@ -41,6 +41,7 @@ import Aboutcerita from "./pages/Aboutcerita";
 import StoryDetail from "./pages/StoryDetail";
 import MiniQuiz from "./pages/MiniQuiz";
 import QRScanner from "./pages/QRScanner";
+import Arundaya from "./pages/arundaya";
 
 function App() {
     const [isLandscape, setIsLandscape] = useState(false);
@@ -148,6 +149,7 @@ function App() {
 
             </Route>
             <Route path="/start" element={<QRScanner />} />
+            <Route path="/arundaya" element={<Arundaya />} />
         </Routes>
     );
 }

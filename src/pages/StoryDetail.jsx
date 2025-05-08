@@ -212,15 +212,24 @@ const StoryDetail = () => {
           </button>
         </div>
         {/* Tombol ke Mainkan Game dan MiniQuiz */}
-        {!isLutung && (
-          <div className="w-full flex justify-center mt-2">
-            <Link
-              to="/Home2"
-              className="rounded-lg border-2 border-primary-orange bg-black text-primary-orange font-bold px-8 py-1.5 text-base shadow transition hover:bg-primary-orange hover:text-black mb-1"
-            >
-              Mainkan Game
-            </Link>
-          </div>
+        {isLutung && currentPage === totalPages ? (
+            <div id="maingamebutton" className="w-full flex justify-center mt-2">
+                <Link
+                    to="/arundaya"
+                    className="rounded-lg border-2 border-primary-orange bg-black text-primary-orange font-bold px-8 py-1.5 text-base shadow transition hover:bg-primary-orange hover:text-black mb-1"
+                >
+                    Mainkan Game
+                </Link>
+            </div>
+        ) : !isLutung && (
+            <div id="maingamebutton" className="w-full flex justify-center mt-2">
+                <Link
+                    to="/Home2"
+                    className="rounded-lg border-2 border-primary-orange bg-black text-primary-orange font-bold px-8 py-1.5 text-base shadow transition hover:bg-primary-orange hover:text-black mb-1"
+                >
+                    Mainkan Game
+                </Link>
+            </div>
         )}
         <div className="w-full flex justify-center mt-1">
           <Link

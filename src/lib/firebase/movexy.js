@@ -68,6 +68,11 @@ export const KoleksitoFalse = async (gender) => {
   }
   await set(ref(database, `count/${gen}/Koleksi`), false);
 }
+export const TamuTrue = async (tamustr) => {
+  var gen=tamustr;
+  
+  await set(ref(database, `count/tamuistana`), gen);
+}
 export const KoleksiHitung = async (gender) => {
   let mg=gender;
   var gen="Demo";
