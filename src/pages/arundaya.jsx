@@ -144,11 +144,15 @@ const Arundaya = () => {
        const handleEndChar = async () => {
            const characterName = getCharacterName(selectedCharacter).toLowerCase(); // Ambil nama karakter dalam huruf kecil
            const outfitIndex = selectedOutfit + 1; // Indeks outfit dimulai dari 0, jadi tambahkan 1
-           const dataString = `true_${characterName}_${outfitIndex}`; // Format string
+
+           // Cek apakah user.name ada, jika tidak, buat nama guest dengan angka acak
+           const userName = user.Nama ? user.Nama : `guest${Math.floor(100 + Math.random() * 900)}`; // Menghasilkan angka acak 3 digit
+
+           const dataString = `true_${characterName}_${outfitIndex}_${userName}`; // Format string
 
            // Kirim data ke Firebase
            try {
-              TamuTrue(dataString);
+               TamuTrue(dataString);
                console.log("Data berhasil dikirim:", dataString);
            } catch (error) {
                console.error("Error mengirim data ke Firebase:", error);

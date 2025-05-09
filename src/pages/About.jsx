@@ -31,7 +31,7 @@ const About = () => {
     return (
         <div>
             <BackIcon />
-            <div className="w-full">
+            <div className="w-full text-left">
                 <Carousel autoSlide hideNavigation>
                     {[
                         ...selectedContent.images.map((s) => (
@@ -40,10 +40,10 @@ const About = () => {
                     ]}
                 </Carousel>
             </div>
-            <div className="text-primary-orange flex justify-center items-center flex-col gap-2 px-10 py-5">
-                <h1 className="text-xl font-bold pb-2">{selectedContent.title}</h1>
+            <div className="text-primary-orange flex text-left flex-col gap-2 px-10 py-5">
+                <h1 className="text-xl text-left font-bold pb-2">{selectedContent.title}</h1>
                 <div
-                    className="text-xl border-t-2 font-light text-center border-primary-orange py-5 tracking-wide leading-5 unreset"
+                    className="text-xl border-t-2 font-light text-left border-primary-orange py-5 tracking-wide leading-5 unreset"
                     dangerouslySetInnerHTML={{ __html: sanitizeDOM(selectedContent.description) }}
                 ></div>
             </div>

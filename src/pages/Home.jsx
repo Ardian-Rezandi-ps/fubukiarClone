@@ -87,17 +87,17 @@ const Home = () => {
                 <p className="text-xs tracking-widest">
                     JELAJAH K<span className="text-sm">AR</span>YA
                 </p>
-                <h1 className="text-3xl font-bold">CERITA RAKYAT</h1>
+                <h1 className="text-3xl font-bold text-left">CERITA RAKYAT</h1>
                 <div className="grid grid-cols-2 gap-2 mx-10 mt-3">
                     <Link
                         to="/Aboutcerita"
-                        className="border border-soft-cream bg-primary-darker text-soft-cream rounded-xl text-center content-center px-5 py-2 text-xs"
+                        className="border border-soft-cream bg-primary-darker text-soft-cream rounded-xl text-left content-center px-5 py-2 text-xs"
                     >
                         Tentang <br /> Cerita Rakyat
                     </Link>
                     <Link
                         to="/about/galeri-indonesia-kaya"
-                        className="border border-soft-cream bg-primary-darker text-soft-cream rounded-xl text-center content-center px-5 py-2 text-xs"
+                        className="border border-soft-cream bg-primary-darker text-soft-cream rounded-xl text-left content-center px-5 py-2 text-xs"
                     >
                         Tentang <br /> Galeri Indonesia Kaya
                     </Link>
