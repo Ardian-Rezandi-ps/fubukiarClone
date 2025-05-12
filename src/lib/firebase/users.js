@@ -72,7 +72,28 @@ export const getSelectedUser = async (userId) => {
         return null;
     }
 };
+export const getSelectedUserFinishGame = async (userId) => {
+    const userRef = ref(database, `Users/${userId}/finishedGame`);
+    const snapshot = await get(userRef);
 
+    if (snapshot.exists()) {
+        return snapshot.val();
+    } else {
+        console.log("No user found");
+        return null;
+    }
+};
+export const getSelectedUserFinishArundaya = async (userId) => {
+    const userRef = ref(database, `Users/${userId}/finishedArundaya`);
+    const snapshot = await get(userRef);
+
+    if (snapshot.exists()) {
+        return snapshot.val();
+    } else {
+        console.log("No user found");
+        return null;
+    }
+};
 export const getSelectedUserPoints = async (userId, withTotal = true) => {
     const userRef = ref(database, `Users/${userId}/quiz`);
     const userProfilePointRef = ref(database, `Users/${userId}/points`);
@@ -220,7 +241,9 @@ export const updateUserPoints = async (userId, pointsToAdd) => {
 
     // Update total point
     const newTotalPoint = totalPoint + pointsToAdd;
-
+    if(newTotalPoint>500){
+        newTotalPoint = 500;
+    }
     // Simpan kembali ke database
     await set(userRef, {
         ...userQuizSnapshot.val(),

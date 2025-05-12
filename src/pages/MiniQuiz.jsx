@@ -292,7 +292,7 @@ const MiniQuiz = () => {
         setShowResult(true);
         setShowOverlay(true);
         if (answer === questions[currentQuestion].correctAnswer) {
-            setScore(score + 10);
+            setScore(score + 15);
         }
     };
 

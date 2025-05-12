@@ -7,6 +7,7 @@ import { initializeApp } from "firebase/app";
 import {firebaseConfig} from "../lib/firebase/firebase";
 import { getContentSettingByTag } from "../lib/firebase/contentSetting";
 import { useAuth } from "../context/AuthProvider";
+import { getSelectedUserPoints, updateUserPoints,getSelectedUserFinishGame } from "../lib/firebase/users";
 import { TamuTrue} from "../lib/firebase/movexy";
 const Arundaya = () => {
    const { user, logoutUser } = useAuth();
@@ -14,6 +15,7 @@ const Arundaya = () => {
        const [selectedContent, setSelectedContent] = React.useState(null);
        const [countFromTotal, setCountFromTotal] = React.useState("");
        const [userPoint, setUserPoint] = React.useState("");
+       const [finishUnparse, setFinishUnparse] = React.useState("");
        const [canClaim, setCanClaim] = React.useState(false);
        const [showStory, setShowStory] = React.useState(false);
        const [endChar, setEndChar] = React.useState(false);
@@ -96,7 +98,10 @@ const Arundaya = () => {
            const point = await getSelectedUserPoints(user.id);
            setUserPoint(point);
        };
-
+       const getUserFinished = async () => {
+        const pointx = await getSelectedUserFinishGame(user.id);
+        setFinishUnparse(pointx);
+    };
        const handleCharacterChange = (direction) => {
            const currentIndex = characters.indexOf(selectedCharacter);
            let newIndex = direction === "next" ? currentIndex + 1 : currentIndex - 1;
@@ -149,7 +154,7 @@ const Arundaya = () => {
            const userName = user.Nama ? user.Nama : `guest${Math.floor(100 + Math.random() * 900)}`; // Menghasilkan angka acak 3 digit
 
            const dataString = `true_${characterName}_${outfitIndex}_${userName}`; // Format string
-
+          
            // Kirim data ke Firebase
            try {
                TamuTrue(dataString);
@@ -158,7 +163,10 @@ const Arundaya = () => {
                console.error("Error mengirim data ke Firebase:", error);
            }
 
-           setEndChar(true); // Set endChar menjadi true setelah mengirim data
+           setEndChar(true); 
+
+           const userId = user.id; //// Set endChar menjadi true setelah mengirim data
+           await updateUserPoints(userId, 40);
        };
        const handleContinueToGame = () => {
            navigate('/joystix');

@@ -425,7 +425,7 @@ Suatu pagi, mereka memutuskan pergi ke hutan untuk mencari kayu bakar…<br></br
        
        // if (!hasEarnedPoints) {
             const userId = user.id; // Ganti dengan ID pengguna yang sesuai
-            await updateUserPoints(userId, 100); // Panggil fungsi untuk memperbarui poin
+            await updateUserPoints(userId, 80); // Panggil fungsi untuk memperbarui poin
           //  setHasEarnedPoints(true); // Tandai bahwa poin sudah ditambahkan
        // }
     };
