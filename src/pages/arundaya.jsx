@@ -7,7 +7,7 @@ import { initializeApp } from "firebase/app";
 import {firebaseConfig} from "../lib/firebase/firebase";
 import { getContentSettingByTag } from "../lib/firebase/contentSetting";
 import { useAuth } from "../context/AuthProvider";
-import { getSelectedUserPoints, updateUserPoints,getSelectedUserFinishGame } from "../lib/firebase/users";
+import { getSelectedUserPoints, updateUserPoints,getSelectedUserFinishArundaya } from "../lib/firebase/users";
 import { TamuTrue} from "../lib/firebase/movexy";
 const Arundaya = () => {
    const { user, logoutUser } = useAuth();
@@ -147,7 +147,13 @@ const Arundaya = () => {
            window.console.log("kliked "+ showStory);
        };
        const handleEndChar = async () => {
-           const characterName = getCharacterName(selectedCharacter).toLowerCase(); // Ambil nama karakter dalam huruf kecil
+           let characterName = getCharacterName(selectedCharacter).toLowerCase(); // Ambil nama karakter dalam huruf kecil
+           
+           // Cek apakah characterName mengandung spasi
+           if (characterName.includes(" ")) {
+               characterName = characterName.split(" ")[0]; // Ambil bagian pertama sebelum spasi
+           }
+
            const outfitIndex = selectedOutfit + 1; // Indeks outfit dimulai dari 0, jadi tambahkan 1
 
            // Cek apakah user.name ada, jika tidak, buat nama guest dengan angka acak

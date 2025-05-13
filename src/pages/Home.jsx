@@ -138,7 +138,7 @@ const Home = () => {
                                     </button>
                                 </div>
 
-                                <Link id="pointx" to="/collection" className="text-xs pb-2 mt-2 w-3/4 text-center">
+                                <Link id="pointx" to="/profile" className="text-xs pb-2 mt-2 w-3/4 text-center">
                                     Poin: {userPoint ? userPoint.replace(/\/\s*500/, '') : 0}
                                 </Link>
                                 <Link to="/profile" className="bg-primary-orange text-white rounded-xl mt-4 p-2 w-3/4">
