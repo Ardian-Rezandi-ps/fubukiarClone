@@ -147,7 +147,7 @@ const Arundaya = () => {
            window.console.log("kliked "+ showStory);
        };
        const handleEndChar = async () => {
-           let characterName = getCharacterName(selectedCharacter).toLowerCase(); // Ambil nama karakter dalam huruf kecil
+           let characterName =  getCharacterFbName(selectedCharacter).toLowerCase(); // Ambil nama karakter dalam huruf kecil
            
            // Cek apakah characterName mengandung spasi
          
@@ -182,6 +182,27 @@ const Arundaya = () => {
        };
        const getCharacterName = (character) => {
         const baseNames = {
+            "images/arun/skin1/boy.png": "Anak Laki-Laki",
+            "images/arun/skin1/girl.png": "Anak Perempuan",
+            "images/arun/skin1/man.png": "Pria Dewasa",
+            "images/arun/skin1/woman.png": "Wanita Dewasa",
+            "images/arun/skin1/kakek.png": "Kakek",
+            "images/arun/skin1/nenek.png": "Nenek",
+            "images/arun/skin1/petani.png": "Petani",
+            "images/arun/skin1/fruitseller.png": "Penjual Buah",
+        };
+
+        // Cek apakah karakter ada di baseNames
+        if (baseNames[character]) {
+            return baseNames[character];
+        }
+
+        // Cek untuk skin 2 sampai skin 5
+        const characterBase = character.replace(/skin[2-5]/, 'skin1');
+        return baseNames[characterBase] || "Unknown";
+    };
+    const getCharacterFbName = (character) => {
+        const baseNames = {
             "images/arun/skin1/boy.png": "Boy",
             "images/arun/skin1/girl.png": "Girl",
             "images/arun/skin1/man.png": "Man",
@@ -202,7 +223,7 @@ const Arundaya = () => {
         return baseNames[characterBase] || "Unknown";
     };
     const getbajuName = (outfit) => {
-        const characterName = getCharacterName(selectedCharacter); // Ambil nama karakter dan ubah menjadi huruf kecil
+        const characterName = "Warna"; // Ambil nama karakter dan ubah menjadi huruf kecil
         return `${characterName}-${outfit + 1}`; // Mengembalikan nama karakter dan indeks outfit (indeks dimulai dari 0)
     };
        if (isLoading) {
@@ -283,7 +304,7 @@ Jejakmu kini ada di Arundaya—negeri yang tumbuh dari kebaikan, cinta, dan hara
                                </button>
                                
                                {/* Label nama karakter */}
-                               <span className="bg-orange-500 text-white px-6 py-2 rounded mx-2 text-lg w-32 text-center"> {/* Lebar tetap */}
+                               <span className="bg-orange-500 text-white px-6 py-2 rounded mx-2 text-base w-32 text-center"> {/* Lebar tetap */}
                                    {getCharacterName(selectedCharacter)} {/* Panggil fungsi untuk mendapatkan nama karakter */}
                                </span>
 
