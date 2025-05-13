@@ -150,15 +150,15 @@ const Arundaya = () => {
            let characterName = getCharacterName(selectedCharacter).toLowerCase(); // Ambil nama karakter dalam huruf kecil
            
            // Cek apakah characterName mengandung spasi
-           if (characterName.includes(" ")) {
-               characterName = characterName.split(" ")[0]; // Ambil bagian pertama sebelum spasi
-           }
+         
 
            const outfitIndex = selectedOutfit + 1; // Indeks outfit dimulai dari 0, jadi tambahkan 1
 
            // Cek apakah user.name ada, jika tidak, buat nama guest dengan angka acak
-           const userName = user.Nama ? user.Nama : `guest${Math.floor(100 + Math.random() * 900)}`; // Menghasilkan angka acak 3 digit
-
+          let userName = user.Nama ? user.Nama : `guest${Math.floor(100 + Math.random() * 900)}`; // Menghasilkan angka acak 3 digit
+           if (userName.includes(" ")) {
+            userName = userName.split(" ")[0]; // Ambil bagian pertama sebelum spasi
+           }
            const dataString = `true_${characterName}_${outfitIndex}_${userName}`; // Format string
           
            // Kirim data ke Firebase

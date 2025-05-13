@@ -240,7 +240,7 @@ export const updateUserPoints = async (userId, pointsToAdd) => {
     }
 
     // Update total point
-    const newTotalPoint = totalPoint + pointsToAdd;
+    let newTotalPoint = totalPoint + pointsToAdd;
     if(newTotalPoint>500){
         newTotalPoint = 500;
     }
