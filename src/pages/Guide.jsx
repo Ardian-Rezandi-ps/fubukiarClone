@@ -26,7 +26,7 @@ const Guide = () => {
     const paragraphs = {
         1: 'Tekan tombol “Mulai Jelajah Cerita” untuk mengaktifkan kamera. Arahkan ke gambar untuk mulai eksplorasi cerita interaktif!',
         2: 'Temukan 2 QR code di awal cerita Lutung Kasarung dan Raja Ampat. Pindai untuk membaca cerita lengkap dan mulai petualanganmu!',
-        3: 'Tekan tombol “Kuis” untuk menjawab kuisnya. Dapatkan nilai lebih dari 100 untuk ditukar dengan hadiah dari Indonesia Kaya. Semakin besar nilaimu, semakin menarik hadiahnya!',
+        3: 'Tekan tombol “Kuis” untuk menjawab kuisnya. Dapatkan nilai lebih dari 300 untuk ditukar dengan hadiah dari Indonesia Kaya. Semakin besar nilaimu, semakin menarik hadiahnya!',
         4: 'Cari item-item tersembunyi di setiap panel. Saat Anda menemukannya, item akan otomatis tersimpan dalam koleksi Anda.',
         5: 'Sekarang saatnya kamu menjelajahi cerita. Selamat menikmati pengalaman di dunia Cerita Rakyat Indonesia!'
        
