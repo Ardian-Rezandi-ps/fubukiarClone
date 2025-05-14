@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useAuth } from "../context/AuthProvider";
 import { useNavigate } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
@@ -6,7 +6,6 @@ import { getSelectedUserPoints, updateUserPoints } from "../lib/firebase/users";
 const MiniQuiz = () => {
     const { user, logoutUser } = useAuth();
     const navigate = useNavigate();
-    const [countFromTotal, setCountFromTotal] = React.useState("");
     const { quizType } = useParams(); // Get the quiz type from URL parameter
     const [currentQuestion, setCurrentQuestion] = useState(0);
     const [selectedAnswer, setSelectedAnswer] = useState(null);
@@ -15,6 +14,13 @@ const MiniQuiz = () => {
     const [isQuizFinished, setIsQuizFinished] = useState(false);
     const [showOverlay, setShowOverlay] = useState(false);
     const [canClaim, setCanClaim] = React.useState(false);
+
+    useEffect(() => {
+        // Cek jika user adalah null
+        if (user === null) {
+            navigate('/login'); // Arahkan ke halaman login
+        }
+    }, [user, navigate]); // Tambahkan user dan navigate sebagai dependensi
 
     // Lutung quiz questions
     const lutungQuestions = [

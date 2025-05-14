@@ -12,13 +12,13 @@ import { initializeApp } from "firebase/app";
 import {firebaseConfig} from "../lib/firebase/firebase";
 const Home2 = () => {
     const { user, logoutUser } = useAuth();
+    const navigate = useNavigate();
     const [isLoading, setIsLoading] = React.useState(true);
     const [selectedContent, setSelectedContent] = React.useState(null);
     const [countFromTotal, setCountFromTotal] = React.useState("");
     const [userPoint, setUserPoint] = React.useState("");
     const [canClaim, setCanClaim] = React.useState(false);
     const [showStory, setShowStory] = React.useState(false);
-    const navigate = useNavigate();
     initializeApp(firebaseConfig);
     const hasCompletedTutorial = sessionStorage.getItem("hasCompletedTutorial");
     const redirectUserUrl = hasCompletedTutorial ? "/start" : "/guide";
@@ -26,6 +26,13 @@ const Home2 = () => {
         const point = await getSelectedUserPoints(user.id);
         setUserPoint(point);
     };
+
+    useEffect(() => {
+        // Cek jika user adalah null
+        if (user === null) {
+            navigate('/login'); // Arahkan ke halaman login
+        }
+    }, [user, navigate]); // Tambahkan user dan navigate sebagai dependensi
 
     useEffect(() => {
         const fetchContent = async () => {
