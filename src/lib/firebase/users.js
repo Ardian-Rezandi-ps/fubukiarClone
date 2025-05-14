@@ -235,11 +235,16 @@ export const updateUserPoints = async (userId, pointsToAdd) => {
 
     let totalPoint = 0;
 
-    if (userQuizSnapshot.exists()) {
-        const userQuiz = userQuizSnapshot.val();
-        totalPoint = Object.values(userQuiz).reduce((acc, curr) => acc + curr, 0);
-    }
+    //if (userQuizSnapshot.exists()) {
+   //     const userQuiz = userQuizSnapshot.val();
+    //    totalPoint = Object.values(userQuiz).reduce((acc, curr) => acc + curr, 0);
 
+   // }
+   if (userProfilePointSnapshot.exists()) {
+      const usertot =userProfilePointSnapshot.val();
+       totalPoint = usertot;
+ 
+   }
     // Update total point
     let newTotalPoint = totalPoint + pointsToAdd;
     if(newTotalPoint>500){
