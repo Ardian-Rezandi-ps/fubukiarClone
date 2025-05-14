@@ -95,24 +95,25 @@ export const getSelectedUserFinishArundaya = async (userId) => {
     }
 };
 export const getSelectedUserPoints = async (userId, withTotal = true) => {
-    const userRef = ref(database, `Users/${userId}/quiz`);
+    const userRef = ref(database, `Users/${userId}/quiz/totalPoint`);
     const userProfilePointRef = ref(database, `Users/${userId}/points`);
     const userRedeeemCodeRef = ref(database, `Users/${userId}/redeemCode`);
     const quizRef = ref(database, `Quiz`);
     const snapshot = await get(userRef);
     const userProfilePointSnapshot = await get(userProfilePointRef);
-    const userRedeemCodeSnapshot = await get(userRedeeemCodeRef);
+   // const userRedeemCodeSnapshot = await get(userRedeeemCodeRef);
     const quizSnapshot = await get(quizRef);
-
+    console.log(" snapshot: ",  snapshot.val());
     const quizData = quizSnapshot.val();
     const totalPointFromQuiz = quizData ? Object.values(quizData).reduce((acc, curr) => acc + Number(curr.totalPoint), 0) : 420;
     if (snapshot.exists()) {
-        if (userRedeemCodeSnapshot.exists()) {
-            return 0;
-        }
+       // if (userRedeemCodeSnapshot.exists()) {
+        //    return 0;
+       // }
         const userQuiz = snapshot.val();
         const userProfilePoint = userProfilePointSnapshot.val();
         const totalPoint = Object.values(userQuiz).reduce((acc, curr) => acc + curr, 0);
+        console.log("withTotar: ", withTotal);
         if (withTotal) {
             return `${totalPoint + userProfilePoint} / ${totalPointFromQuiz + 80}`;
         } else {
@@ -244,13 +245,17 @@ export const updateUserPoints = async (userId, pointsToAdd) => {
     if(newTotalPoint>500){
         newTotalPoint = 500;
     }
-    // Simpan kembali ke database
-    await set(userRef, {
-        ...userQuizSnapshot.val(),
-        totalPoint: newTotalPoint, // Update totalPoint
+    await await set(userRef, {
+       ...userQuizSnapshot.val(),
+       totalPoint: newTotalPoint, // Update totalPoint
     });
+    // Simpan kembali ke database
+  //  await set(userRef, {
+       // ...userQuizSnapshot.val(),
+     //   totalPoint: newTotalPoint, // Update totalPoint
+  //  });
 
     // Update poin di profile
-    const currentProfilePoints = userProfilePointSnapshot.exists() ? userProfilePointSnapshot.val() : 0;
-    await set(userProfilePointRef, currentProfilePoints + pointsToAdd);
+   // const currentProfilePoints = userProfilePointSnapshot.exists() ? userProfilePointSnapshot.val() : 0;
+    await set(userProfilePointRef, newTotalPoint);
 };

@@ -153,10 +153,13 @@ const Arundaya = () => {
          
 
            const outfitIndex = selectedOutfit + 1; // Indeks outfit dimulai dari 0, jadi tambahkan 1
-
+           let userName='guest${Math.floor(100 + Math.random() * 900)';
            // Cek apakah user.name ada, jika tidak, buat nama guest dengan angka acak
-          let userName = user.Nama ? user.Nama : `guest${Math.floor(100 + Math.random() * 900)}`; // Menghasilkan angka acak 3 digit
-           if (userName.includes(" ")) {
+          if(user!=null) {
+            userName = user.Nama
+          }
+          
+          if (userName.includes(" ")) {
             userName = userName.split(" ")[0]; // Ambil bagian pertama sebelum spasi
            }
            const dataString = `true_${characterName}_${outfitIndex}_${userName}`; // Format string
