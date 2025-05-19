@@ -7,7 +7,7 @@ import { initializeApp } from "firebase/app";
 import {firebaseConfig} from "../lib/firebase/firebase";
 import { getContentSettingByTag } from "../lib/firebase/contentSetting";
 import { useAuth } from "../context/AuthProvider";
-import { getSelectedUserPoints, updateUserPoints,getSelectedUserFinishArundaya } from "../lib/firebase/users";
+import { getSelectedUserPoints, updateUserPoints,getSelectedUserFinishArundaya,setFinishArundaya } from "../lib/firebase/users";
 import { TamuTrue} from "../lib/firebase/movexy";
 const Arundaya = () => {
    const { user, logoutUser } = useAuth();
@@ -179,8 +179,16 @@ const Arundaya = () => {
 
        setEndChar(true); 
 if(user!=null) {
-       const userId = user.id; //// Set endChar menjadi true setelah mengirim data
-       await updateUserPoints(userId, 40);
+   
+    const userId = user.id;
+    const isPernah= await getSelectedUserFinishArundaya(userId);  
+    if(!isPernah){
+        window.console.log("!ispernah");
+        updateUserPoints(userId, 40);
+          
+       setFinishArundaya(userId,true);
+    }
+       
     }
    };
    const handleContinueToGame = () => {

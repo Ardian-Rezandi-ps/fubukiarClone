@@ -75,37 +75,128 @@ export const getSelectedUser = async (userId) => {
 export const getSelectedUserFinishGame = async (userId) => {
     const userRef = ref(database, `Users/${userId}/finishedGame`);
     const snapshot = await get(userRef);
-
+  
     if (snapshot.exists()) {
+    
         return snapshot.val();
     } else {
         console.log("No user found");
         return null;
+    }
+};
+export const setFinishArundaya = async (userId, pernah) => {
+    try {
+        const userRef = ref(database, `Users/${userId}/finishedArundaya`);
+        await set(userRef , pernah);
+    
+    }catch (error) {
+        console.log("Error updating FinishArundaya user: ", error);
+        return false;
+    }
+}
+export const setFinishQuizLutung = async (userId, pernah) => {
+    try {
+        const userRef = ref(database, `Users/${userId}/finishedQuizLutung`);
+        await set(userRef , pernah);
+    
+    }catch (error) {
+        console.log("Error updating quizlutung user: ", error);
+        return false;
+    }
+}
+export const setFinishQuizRaja = async (userId, pernah) => {
+    try {
+        const userRef = ref(database, `Users/${userId}/finishedQuizRaja`);
+        await set(userRef , pernah);
+    
+    }catch (error) {
+        console.log("Error updating quizRaja user: ", error);
+        return false;
+    }
+}
+export const setFinishArungi = async (userId, pernah) => {
+    try {
+        const userRef = ref(database, `Users/${userId}/finishedArungi`);
+        await set(userRef , pernah);
+    
+    }catch (error) {
+        console.log("Error updating arungi user: ", error);
+        return false;
+    }
+}
+export const getSelectedUserFinishArungi = async (userId) => {
+    const userRef = ref(database, `Users/${userId}/finishedArungi`);
+    const snapshot = await get(userRef);
+    console.log("usersnap"+userId);
+    if (snapshot.exists()) {
+      setFinishArungi(userId, true);
+        return true;
+    } else {
+        setFinishArungi(userId, false);
+        console.log("No data found");
+        return false;
+    }
+};
+export const getSelectedUserFinishQuizLutung = async (userId) => {
+    const userRef = ref(database, `Users/${userId}/finishedQuizLutung`);
+    const snapshot = await get(userRef);
+    console.log("usersnap"+userId);
+    if (snapshot.exists()) {
+      setFinishQuizLutung(userId,true);
+        return true;
+    } else {
+       setFinishQuizLutung(userId,false);
+        console.log("No data found");
+        return false;
+       
+    }
+};
+export const getSelectedUserFinishQuizRaja = async (userId) => {
+    const userRef = ref(database, `Users/${userId}/finishedQuizRaja`);
+    const snapshot = await get(userRef);
+    console.log("usersnap"+userId);
+    if (snapshot.exists()) {
+      setFinishQuizRaja(userId,true);
+        return true;
+    } else {
+        setFinishQuizRaja(userId,false);
+        console.log("No data found");
+        return false;
+       
     }
 };
 export const getSelectedUserFinishArundaya = async (userId) => {
     const userRef = ref(database, `Users/${userId}/finishedArundaya`);
     const snapshot = await get(userRef);
-
+    console.log("usersnap"+userId);
     if (snapshot.exists()) {
-        return snapshot.val();
+        setFinishArundaya(userId,true);
+        return true;
     } else {
-        console.log("No user found");
-        return null;
+        setFinishArundaya(userId,false);
+        console.log("No data found");
+        return false;
+       
     }
 };
 export const getSelectedUserPoints = async (userId, withTotal = true) => {
-    const userRef = ref(database, `Users/${userId}/quiz/totalPoint`);
+   // const userRef = ref(database, `Users/${userId}/quiz/totalPoint`);
     const userProfilePointRef = ref(database, `Users/${userId}/points`);
     const userRedeeemCodeRef = ref(database, `Users/${userId}/redeemCode`);
-    const quizRef = ref(database, `Quiz`);
-    const snapshot = await get(userRef);
+  //  const quizRef = ref(database, `Quiz`);
+    const snapshot = await get(userProfilePointRef);
     const userProfilePointSnapshot = await get(userProfilePointRef);
+    if (snapshot.exists()) {
+        return snapshot.val();
+    }else{
+        return 0;
+    }
    // const userRedeemCodeSnapshot = await get(userRedeeemCodeRef);
-    const quizSnapshot = await get(quizRef);
-    console.log(" snapshot: ",  snapshot.val());
-    const quizData = quizSnapshot.val();
-    const totalPointFromQuiz = quizData ? Object.values(quizData).reduce((acc, curr) => acc + Number(curr.totalPoint), 0) : 420;
+   // const quizSnapshot = await get(quizRef);
+   // console.log(" snapshot: ",  snapshot.val());
+  //  const quizData = quizSnapshot.val();
+
+   /* const totalPointFromQuiz = quizData ? Object.values(quizData).reduce((acc, curr) => acc + Number(curr.totalPoint), 0) : 420;
     if (snapshot.exists()) {
        // if (userRedeemCodeSnapshot.exists()) {
         //    return 0;
@@ -132,6 +223,7 @@ export const getSelectedUserPoints = async (userId, withTotal = true) => {
             return 0;
         }
     }
+        */
 };
 
 export const getSelecterUserPointByQuizId = async (userId, quizId) => {
@@ -227,10 +319,10 @@ export const searchUserByEmail = async (email) => {
 };
 
 export const updateUserPoints = async (userId, pointsToAdd) => {
-    const userRef = ref(database, `Users/${userId}/quiz`);
+    //const userRef = ref(database, `Users/${userId}/quiz`);
     const userProfilePointRef = ref(database, `Users/${userId}/points`);
 
-    const userQuizSnapshot = await get(userRef);
+   // const userQuizSnapshot = await get(userRef);
     const userProfilePointSnapshot = await get(userProfilePointRef);
 
     let totalPoint = 0;
@@ -243,17 +335,14 @@ export const updateUserPoints = async (userId, pointsToAdd) => {
    if (userProfilePointSnapshot.exists()) {
       const usertot =userProfilePointSnapshot.val();
        totalPoint = usertot;
- 
+        console.log("updatetotal="+totalPoint);
    }
     // Update total point
     let newTotalPoint = totalPoint + pointsToAdd;
     if(newTotalPoint>500){
         newTotalPoint = 500;
     }
-    await await set(userRef, {
-       ...userQuizSnapshot.val(),
-       totalPoint: newTotalPoint, // Update totalPoint
-    });
+  await set(userProfilePointRef, newTotalPoint);
     // Simpan kembali ke database
   //  await set(userRef, {
        // ...userQuizSnapshot.val(),
@@ -262,5 +351,27 @@ export const updateUserPoints = async (userId, pointsToAdd) => {
 
     // Update poin di profile
    // const currentProfilePoints = userProfilePointSnapshot.exists() ? userProfilePointSnapshot.val() : 0;
-    await set(userProfilePointRef, newTotalPoint);
+   // await set(userProfilePointRef, newTotalPoint);
+};
+
+export const getMaxScoreQuizLutung = async (userId) => {
+    const userRef = ref(database, `Users/${userId}/maxScoreQuizLutung`);
+    const snapshot = await get(userRef);
+    return snapshot.exists() ? snapshot.val() : 0;
+};
+
+export const setMaxScoreQuizLutung = async (userId, score) => {
+    const userRef = ref(database, `Users/${userId}/maxScoreQuizLutung`);
+    await set(userRef, score);
+};
+
+export const getMaxScoreQuizRaja = async (userId) => {
+    const userRef = ref(database, `Users/${userId}/maxScoreQuizRaja`);
+    const snapshot = await get(userRef);
+    return snapshot.exists() ? snapshot.val() : 0;
+};
+
+export const setMaxScoreQuizRaja = async (userId, score) => {
+    const userRef = ref(database, `Users/${userId}/maxScoreQuizRaja`);
+    await set(userRef, score);
 };

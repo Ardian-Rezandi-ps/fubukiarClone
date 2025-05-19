@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useAuth } from "../context/AuthProvider";
 import { useNavigate } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
-import { getSelectedUserPoints, updateUserPoints } from "../lib/firebase/users"; // Tambahkan updateUserPoints
+import { getSelectedUserPoints,updateUserPoints, getSelectedUserFinishQuizLutung,setFinishQuizLutung, getSelectedUserFinishQuizRaja,setFinishQuizRaja, getMaxScoreQuizLutung, setMaxScoreQuizLutung, getMaxScoreQuizRaja, setMaxScoreQuizRaja } from "../lib/firebase/users"; // Tambahkan updateUserPoints
 const MiniQuiz = () => {
     const { user, logoutUser } = useAuth();
     const navigate = useNavigate();
@@ -315,12 +315,40 @@ const MiniQuiz = () => {
         }
     };
     const handleFinishQuiz = async () => {
+        window.console.log("finish quiz="+ quizType);
+        const userId = user.id; 
         setIsQuizFinished(true);
-       // if (!hasEarnedPoints) {
-            const userId = user.id; // Ganti dengan ID pengguna yang sesuai
+        let isDapatPoin=false;
+        if( quizType === 'empat-raja'){
+            const isPernah= await getSelectedUserFinishQuizRaja(userId);  
+            isDapatPoin=isPernah;
+            setFinishQuizRaja(userId,true);
+
+            // Cek dan update skor tertinggi
+            const maxScore = await getMaxScoreQuizRaja(userId);
+            if (score > maxScore) {
+                await setMaxScoreQuizRaja(userId, score);
+                isDapatPoin=false;
+            }
+        }else{
+            const isPernah= await getSelectedUserFinishQuizLutung(userId);  
+            window.console.log("isPernah="+ isPernah);
+            isDapatPoin=isPernah;
+            setFinishQuizLutung(userId,true);
+
+            // Cek dan update skor tertinggi
+            const maxScore = await getMaxScoreQuizLutung(userId);
+            if (score > maxScore) {
+                await setMaxScoreQuizLutung(userId, score);
+                isDapatPoin=false;
+            }
+        }
+        window.console.log("isdap="+ isDapatPoin);
+      if (!isDapatPoin) {
+           // Ganti dengan ID pengguna yang sesuai
             await updateUserPoints(userId, score); // Panggil fungsi untuk memperbarui poin
           //  setHasEarnedPoints(true); // Tandai bahwa poin sudah ditambahkan
-       // }
+      }
     };
     const handleRestartQuiz = () => {
         setCurrentQuestion(0);
