@@ -42,6 +42,7 @@ import StoryDetail from "./pages/StoryDetail";
 import MiniQuiz from "./pages/MiniQuiz";
 import QRScanner from "./pages/QRScanner";
 import Arundaya from "./pages/arundaya";
+import ControlArundaya from "./pages/ControlArundaya";
 
 function App() {
     const [isLandscape, setIsLandscape] = useState(false);
@@ -129,6 +130,7 @@ function App() {
                 <Route path="/story-detail/:cerita" element={<StoryDetail />} />
                 <Route path="/mini-quiz" element={<MiniQuiz />} />
                 <Route path="/mini-quiz/:quizType" element={<MiniQuiz />} />
+                <Route path="/control-arundaya" element={<ControlArundaya />} />
             </Route>
             <Route element={<DashboardLayout />}>
                 <Route path="/dashboard" element={<Dashboard />} />

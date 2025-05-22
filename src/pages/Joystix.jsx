@@ -199,10 +199,12 @@ Suatu pagi, mereka memutuskan pergi ke hutan untuk mencari kayu bakar…<br></br
 
     };
     const handleReadyGame= () => {
+        updatemove(0.0001, 0, gender);
         setIsCompleteCollection(false);
         setReadyGame(true);
         onlineGender(gender, true);
         setIsEventActive(true);
+        updatemove(0, 0, gender);
     };
 
     const npcDialog = {
@@ -486,7 +488,10 @@ Suatu pagi, mereka memutuskan pergi ke hutan untuk mencari kayu bakar…<br></br
                     <b>—ini adalah jawaban dari doa mereka.</b>
                 </p>
                 <button id="finishedgamebutton"
-                    onClick={() => navigate('/story-detail/empat-raja')}
+                    onClick={() => {
+                        handleBackChoice();
+                        navigate('/story-detail/empat-raja');
+                    }}
                     className="mt-6 bg-primary-orange text-white px-4 py-2 rounded-lg justify-center"
                 >
                     Kembali
