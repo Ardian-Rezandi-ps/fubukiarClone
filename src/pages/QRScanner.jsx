@@ -113,6 +113,14 @@ const QRScanner = () => {
         stopCamera(); // Matikan kamera sebelum navigate
         navigate("/story-detail/empat-raja");
         return;
+      }else  if (data === "https://empatraja.netlify.app/story-detail/lutung") {
+        stopCamera(); // Matikan kamera sebelum navigate
+        navigate("/story-detail/lutung");
+        return;
+      }else if (data === "https://empatraja.netlify.app/story-detail/empat-raja") {
+        stopCamera(); // Matikan kamera sebelum navigate
+        navigate("/story-detail/empat-raja");
+        return;
       }
 
       let url;
