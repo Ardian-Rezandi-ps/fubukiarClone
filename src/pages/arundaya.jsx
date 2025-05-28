@@ -167,7 +167,7 @@ const Arundaya = () => {
       if (userName.includes(" ")) {
         userName = userName.split(" ")[0]; // Ambil bagian pertama sebelum spasi
        }
-       const dataString = `true_${characterName}_${outfitIndex}_${userName}`; // Format string
+       const dataString = `true_${characterName}_${outfitIndex}_${userName}_${user.id}`; // Format string
       
        // Kirim data ke Firebase
        try {
@@ -177,7 +177,7 @@ const Arundaya = () => {
            console.error("Error mengirim data ke Firebase:", error);
        }
 
-       setEndChar(true); 
+      // setEndChar(true); 
 if(user!=null) {
    
     const userId = user.id;
@@ -190,6 +190,7 @@ if(user!=null) {
     }
        
     }
+    navigate('/control-arundaya');
    };
    const handleContinueToGame = () => {
        navigate('/joystix');
